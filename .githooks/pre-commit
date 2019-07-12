@@ -1,8 +1,21 @@
 echo "Skip pre-commit hooks with --no-verify (not recommended).\n" 
 
 (cd development_environment && make backend-tests)
-if [ $ e 1];
-then
-    echo "EEEE"
+
+if [ $? -lt 1 ]
+    then
+        echo "Tests passed. Keek going with the checks...\n"
+    else
+        echo "Tests not passed. Fix the errors before commiting the changes.\n"
+        exit 1
 fi
-exit 1
+
+if [ `((cd development_environment && make code-style) |  wc -l)` -eq 1 ]; 
+then
+    echo "There are no code-style errors, the commit can proceed.\n"
+else
+    echo "There are code-style errors, run make code-style-verbose to see the errors.\n"
+    exit 1
+fi
+
+exit 0

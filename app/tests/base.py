@@ -16,7 +16,6 @@ import requests
 
 class BaseTestClass(unittest.TestCase):
 
-
     def setUp(self):
         '''
         Setup function
