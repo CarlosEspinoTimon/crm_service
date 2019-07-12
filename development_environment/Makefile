@@ -1,8 +1,8 @@
 backend=$(shell sudo docker-compose ps -q backend)
 
-# Create environment
-create-env:
-	./create_env.sh
+# Initial Configuration
+setup-environment:
+	(./create_env.sh && git config core.hooksPath .githooks)
 
 # Init
 init:
@@ -25,6 +25,8 @@ backend-install-module:
 backend-tests:
 	sudo docker exec -t $(backend) pipenv run python tests/tests.py
 
-
+# Code style
+code-style:
+	sudo docker exec $(backend) /bin/bash -c 'find ./server -iname "*.py" | xargs pipenv run pycodestyle'
 
 

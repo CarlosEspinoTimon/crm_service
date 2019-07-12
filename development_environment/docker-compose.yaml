@@ -16,7 +16,7 @@ services:
       - ../app:/app
     networks:
       crm:
-        ipv4_address: 10.4.0.101
+        ipv4_address: 10.5.0.101
   db:
     image: mysql:5.7
     environment:
@@ -30,7 +30,7 @@ services:
       - crm_db:/var/lib/mysql
     networks:
       crm:
-        ipv4_address: 10.4.0.102
+        ipv4_address: 10.5.0.102
   db_test:
     image: mysql:5.7
     environment:
@@ -44,7 +44,7 @@ services:
       - crm_test_db:/var/lib/mysql
     networks:
       crm:
-        ipv4_address: 10.4.0.103
+        ipv4_address: 10.5.0.103
     
     
 networks:
@@ -53,7 +53,7 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 10.4.0.0/24
+        - subnet: 10.5.0.0/24
 
 volumes:
   crm_db:

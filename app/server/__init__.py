@@ -19,13 +19,10 @@ def create_app(app_config='config.Dev'):
 
     cors = CORS(app)
 
-
     # A simple page that says server status
     @app.route('/')
     @cross_origin()
     def home():
         return jsonify('The server is running!!')
 
-  
     return app
-
