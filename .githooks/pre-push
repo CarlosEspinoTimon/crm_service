@@ -15,4 +15,6 @@ git add -A
 
 git commit -m "Autogenerate documentation with githook" --no-verify
 
+git push
+
 exit 0
