@@ -1,3 +1,6 @@
+"""
+Module
+"""
 import os
 import sys
 import logging
@@ -23,6 +26,13 @@ def create_app(app_config='config.Dev'):
     @app.route('/')
     @cross_origin()
     def home():
+        """
+        Example of documentation endpoint
+        :param string name: The name of foo
+        :param int age: The age of foo
+        :return: a text
+        :rtype: string
+        """
         return jsonify('The server is running!!')
 
     return app

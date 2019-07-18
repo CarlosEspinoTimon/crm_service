@@ -12,9 +12,9 @@ fi
 
 if [ `((cd development_environment && make code-style) |  wc -l)` -eq 1 ]; 
 then
-    echo "There are no code-style errors, the commit can proceed.\n"
+    echo "\nThere are no code-style errors, the commit can proceed.\n"
 else
-    echo "There are code-style errors, run make code-style-verbose to see the errors.\n"
+    echo "\nThere are code-style errors, run make code-style-verbose to see the errors.\n"
     exit 1
 fi
 

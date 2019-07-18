@@ -27,10 +27,14 @@ backend-tests:
 
 # Code style
 code-style-verbose:
-	sudo docker exec $(backend) /bin/bash -c 'find ./ -iname "*.py" | xargs pipenv run pycodestyle --verbose'
+	sudo docker exec $(backend) /bin/bash -c 'find ./ -not -path "./docs*" -iname "*.py" | xargs pipenv run pycodestyle --verbose'
 
 # Code style
 code-style:
-	sudo docker exec $(backend) /bin/bash -c 'find ./ -iname "*.py" | xargs pipenv run pycodestyle --quiet'
+	sudo docker exec $(backend) /bin/bash -c 'find ./ -not -path "./docs*" -iname "*.py" | xargs pipenv run pycodestyle --quiet'
+
+# Generate documentation
+documentation:
+	sudo docker exec $(backend) /bin/bash -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ -M --ext-autodoc -f && pipenv run make clean && pipenv run make html'
 
 
