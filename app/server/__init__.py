@@ -16,6 +16,9 @@ sys.stdout.flush()
 
 
 def create_app(app_config='config.Dev'):
+    """
+    Implementation of app factory.
+    """
     # create and configure the app
     app = Flask(__name__)
     app.config.from_object(app_config)

@@ -13,6 +13,6 @@ fi
 
 git add -A 
 
-git commit -m "Autogenerate documentation with githook" 
+git commit -m "Autogenerate documentation with githook" --no-verify
 
 exit 0
