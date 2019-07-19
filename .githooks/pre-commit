@@ -18,4 +18,19 @@ else
     exit 1
 fi
 
+echo "Generating documentation before push.\n"
+(cd development_environment && make documentation)
+
+if [ $? -lt 1 ]
+    then
+        echo "Documentation generated.\n"
+    else
+        echo "Something went wrong.\n"
+        exit 1
+fi
+
+git add app/docs/
+
+git commit -m "Autogenerate documentation with githook" --no-verify
+
 exit 0
