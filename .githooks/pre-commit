@@ -31,6 +31,4 @@ fi
 
 git add app/docs/
 
-git commit -m "Autogenerate documentation with githook" --no-verify
-
 exit 0
