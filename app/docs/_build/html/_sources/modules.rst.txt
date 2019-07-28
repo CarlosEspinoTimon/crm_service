@@ -1,7 +1,7 @@
-server
-======
+End Points
+==========
 
 .. toctree::
    :maxdepth: 4
 
-   server
+   customer

@@ -27,14 +27,34 @@ backend-tests:
 
 # Code style
 code-style-verbose:
-	sudo docker exec $(backend) /bin/bash -c 'find ./ -not -path "./docs*" -iname "*.py" | xargs pipenv run pycodestyle --verbose'
+	sudo docker exec $(backend) /bin/bash -c 'find ./ -not -path "./docs*" -not -path "./migrations*" -iname "*.py" | xargs pipenv run pycodestyle --verbose'
 
 # Code style
 code-style:
-	sudo docker exec $(backend) /bin/bash -c 'find ./ -not -path "./docs*" -iname "*.py" | xargs pipenv run pycodestyle --quiet'
+	sudo docker exec $(backend) /bin/bash -c 'find ./ -not -path "./docs*" -not -path "./migrations*" -iname "*.py" | xargs pipenv run pycodestyle --quiet'
 
 # Generate documentation
 documentation:
-	sudo docker exec $(backend) /bin/bash -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ -M --ext-autodoc -f && pipenv run make clean && pipenv run make html'
+	# sudo docker exec $(backend) /bin/bash -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ -M --ext-autodoc -f && pipenv run make clean && pipenv run make html'
+	sudo docker exec $(backend) /bin/bash -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ --ext-autodoc && pipenv run make clean && pipenv run make html'
 
+# Init database
+db_init:
+	sudo docker exec -t $(backend) pipenv run flask db init
+
+# Generate database migrations
+db_migrate:
+	sudo docker exec -t $(backend) pipenv run flask db migrate -m '$(comment)'
+
+# Merge two heads
+db_merge:
+	sudo docker exec -t $(backend) pipenv run alembic -c migrations/alembic.ini merge heads
+
+# Apply database upgrade
+db_upgrade:
+	sudo docker exec -t $(backend) pipenv run flask db upgrade
+
+# Apply database downgrade
+db_downgrade:
+	sudo docker exec -t $(backend) pipenv run flask db downgrade
 

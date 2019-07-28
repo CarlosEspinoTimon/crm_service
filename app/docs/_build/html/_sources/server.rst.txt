@@ -1,7 +1,7 @@
-server package
-==============
+End points
+==========
 
-.. automodule:: server
-   :members:
-   :undoc-members:
-   :show-inheritance:
+.. toctree::
+
+   server.controller
+
