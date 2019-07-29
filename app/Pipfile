@@ -16,6 +16,7 @@ pyjwt = "*"
 pycodestyle = "*"
 sphinx = "*"
 sphinx-rtd-theme = "*"
+mysqlclient = "*"
 
 [requires]
 python_version = "3.7"
