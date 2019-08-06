@@ -38,7 +38,8 @@ class TestUser(BaseTestClass):
             '/users',
             data=json.dumps(data),
             headers={
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': self.admin_token
             })
         self.assertEqual(res.status_code, 201)
         data = json.loads(res.get_data(as_text=True))
@@ -61,7 +62,8 @@ class TestUser(BaseTestClass):
         res = self.tester_app.get(
             '/users/1',
             headers={
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': self.admin_token
             })
         self.assertEqual(res.status_code, 200)
         data = json.loads(res.get_data(as_text=True))
@@ -84,6 +86,7 @@ class TestUser(BaseTestClass):
         self.create_user(self.user)
         res = self.tester_app.get('/users/', headers={
             'Content-Type': 'application/json',
+            'Authorization': self.admin_token
         })
         data = json.loads(res.get_data(as_text=True))
         self.assertEqual(res.status_code, 200)
@@ -99,6 +102,7 @@ class TestUser(BaseTestClass):
                                   data=json.dumps(data),
                                   headers={
                                       'Content-Type': 'application/json',
+                                      'Authorization': self.admin_token
                                   })
         data = json.loads(res.get_data(as_text=True))
         self.assertEqual(res.status_code, 200)
@@ -110,7 +114,8 @@ class TestUser(BaseTestClass):
         self.create_user()
         res = self.tester_app.delete('/users/1',
                                      headers={
-                                         'Content-Type': 'application/json'
+                                         'Content-Type': 'application/json',
+                                         'Authorization': self.admin_token
                                      })
         self.assertEqual(res.status_code, 200)
         user = User.query.get(1)
@@ -121,12 +126,13 @@ class TestUser(BaseTestClass):
         user = User.query.get(1)
         self.assertEqual(user.admin, True)
         data = {
-            'admin': False
+            'admin': 0
         }
         res = self.tester_app.put('/users/1/change-admin-status',
                                   data=json.dumps(data),
                                   headers={
-                                      'Content-Type': 'application/json'
+                                      'Content-Type': 'application/json',
+                                      'Authorization': self.admin_token
                                   })
         self.assertEqual(res.status_code, 200)
         self.assertEqual(user.admin, False)
@@ -142,14 +148,16 @@ class TestUser(BaseTestClass):
         res = self.tester_app.put('/users/1/change-password',
                                   data=json.dumps(data),
                                   headers={
-                                      'Content-Type': 'application/json'
+                                      'Content-Type': 'application/json',
+                                      'Authorization': self.admin_token
                                   })
         self.assertEqual(res.status_code, 200)
         self.assertTrue(user.check_password('12345'))
         res = self.tester_app.put('/users/1/change-password',
                                   data=json.dumps(data),
                                   headers={
-                                      'Content-Type': 'application/json'
+                                      'Content-Type': 'application/json',
+                                      'Authorization': self.admin_token
                                   })
         self.assertEqual(res.status_code, 401)
 

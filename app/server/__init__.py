@@ -4,7 +4,7 @@ Server Module
 import sys
 
 from flask import Flask, jsonify
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -32,10 +32,11 @@ def create_app(app_config='config.Dev'):
     app.register_blueprint(customer_controller.customers)
     from .controller import user_controller
     app.register_blueprint(user_controller.users)
+    from .controller import auth_controller
+    app.register_blueprint(auth_controller.auth)
 
     # A simple page that says server status
     @app.route('/')
-    @cross_origin()
     def home():
         return jsonify('The server is running!!')
 

@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_cors import CORS
 
+from ..util.decorator import check_user_token
 from ..service.customer_service import (
     all_customers,
     get_a_customer,
@@ -14,6 +15,7 @@ CORS(customers, max_age=30 * 86400)
 
 
 @customers.route('/', methods=['GET'])
+@check_user_token
 def get_all_customers():
     """
     Function that returns all the customers.
@@ -25,6 +27,7 @@ def get_all_customers():
 
 
 @customers.route('/<int:id>', methods=['GET'])
+@check_user_token
 def get_customer(id):
     """
     Function that given an id it returns the customer.
@@ -40,6 +43,7 @@ def get_customer(id):
 
 
 @customers.route('', methods=['POST'])
+@check_user_token
 def post_customer():
     """
     Function that given the customer data it creates it.
@@ -61,6 +65,7 @@ def post_customer():
 
 
 @customers.route('/<int:customer_id>', methods=['PUT'])
+@check_user_token
 def put_customer(customer_id):
     """
     Function that given the customer_id it updates it with the data sent in the
@@ -83,6 +88,7 @@ def put_customer(customer_id):
 
 
 @customers.route('/<int:id>', methods=['DELETE'])
+@check_user_token
 def delete_customer(id):
     """
     Function that given the customer id it deletes it.

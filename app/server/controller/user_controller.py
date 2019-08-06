@@ -1,6 +1,7 @@
 from flask import Blueprint, abort, jsonify, request
 from flask_cors import CORS
 
+from ..util.decorator import check_admin_token
 from ..service.user_service import (
     all_users,
     get_a_user,
@@ -16,6 +17,7 @@ CORS(users, max_age=30 * 86400)
 
 
 @users.route('/', methods=['GET'])
+@check_admin_token
 def get_all_users():
     """
     Function that returns all the users.
@@ -27,6 +29,7 @@ def get_all_users():
 
 
 @users.route('/<int:id>', methods=['GET'])
+@check_admin_token
 def get_user(id):
     """
     Function that given an id it returns the user.
@@ -42,6 +45,7 @@ def get_user(id):
 
 
 @users.route('', methods=['POST'])
+@check_admin_token
 def post_user():
     """
     Function that given the user data it creates it.
@@ -64,6 +68,7 @@ def post_user():
 
 
 @users.route('/<int:user_id>', methods=['PUT'])
+@check_admin_token
 def put_user(user_id):
     """
     Function that given the user_id it updates it with the data sent in the
@@ -86,15 +91,17 @@ def put_user(user_id):
 
 
 @users.route('/<int:user_id>/change-admin-status', methods=['PUT'])
+@check_admin_token
 def change_admin_status(user_id):
     """
     Function that given the user_id it updates its admin privileges with the
-    information sent in the body of the request.
+    information sent in the body of the request. To grant admin privileges you
+    must send a 1 and to revoke the privileges, a 0.
 
     Example::
 
         data = {
-            'admin': True
+            'admin': 1
         }
 
     :param user_id: the id of the user.
@@ -107,6 +114,7 @@ def change_admin_status(user_id):
 
 
 @users.route('/<int:user_id>/change-password', methods=['PUT'])
+@check_admin_token
 def change_user_password(user_id):
     """
     Function that given the user_id it updates its password with the
@@ -129,6 +137,7 @@ def change_user_password(user_id):
 
 
 @users.route('/<int:id>', methods=['DELETE'])
+@check_admin_token
 def delete_user(id):
     """
     Function that given the user id it deletes it.

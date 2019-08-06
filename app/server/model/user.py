@@ -51,7 +51,8 @@ class User(db.Model):
     def generate_auth_token(self, expiration=300):
         return jwt.encode({
                         'id': self.id,
-                        'exp': time() + expiration
+                        'exp': time() + expiration,
+                        'admin': self.admin
                         },
                         app.config['SECRET_KEY'], algorithm='HS256'
                         ).decode('utf-8')

@@ -35,6 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Authentication" href="authentication.html" />
     <link rel="prev" title="Customer" href="customer.html" /> 
 </head>
 
@@ -89,6 +90,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">End Points</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="customer.html">Customer</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">User</a></li>
+<li class="toctree-l2"><a class="reference internal" href="authentication.html">Authentication</a></li>
 </ul>
 </li>
 </ul>
@@ -163,10 +165,11 @@
 <dt id="server.controller.user_controller.change_admin_status">
 <code class="sig-name descname">change_admin_status</code><span class="sig-paren">(</span><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.change_admin_status" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function that given the user_id it updates its admin privileges with the
-information sent in the body of the request.</p>
+information sent in the body of the request. To grant admin privileges you
+must send a 1 and to revoke the privileges, a 0.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;admin&#39;</span><span class="p">:</span> <span class="kc">True</span>
+    <span class="s1">&#39;admin&#39;</span><span class="p">:</span> <span class="mi">1</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -295,6 +298,8 @@ body of the request.</p>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="authentication.html" class="btn btn-neutral float-right" title="Authentication" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="customer.html" class="btn btn-neutral float-left" title="Customer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
