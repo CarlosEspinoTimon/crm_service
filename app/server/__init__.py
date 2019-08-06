@@ -3,9 +3,7 @@ Server Module
 """
 import sys
 
-from flask import Flask
-from flask import current_app
-from flask import jsonify
+from flask import Flask, jsonify
 from flask_cors import CORS, cross_origin
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -26,9 +24,14 @@ def create_app(app_config='config.Dev'):
     db.init_app(app)
     migrate.init_app(app, db)
 
+    from .model.customer import Customer
+    from .model.user import User
+
     # Import blueprints
     from .controller import customer_controller
     app.register_blueprint(customer_controller.customers)
+    from .controller import user_controller
+    app.register_blueprint(user_controller.users)
 
     # A simple page that says server status
     @app.route('/')

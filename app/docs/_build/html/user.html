@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Customer &mdash; Flask CRM 0.0.1 documentation</title>
+  <title>User &mdash; Flask CRM 0.0.1 documentation</title>
   
 
   
@@ -35,8 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="User" href="user.html" />
-    <link rel="prev" title="End Points" href="modules.html" /> 
+    <link rel="prev" title="Customer" href="customer.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,8 +87,8 @@
 <p class="caption"><span class="caption-text">API Reference:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">End Points</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Customer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user.html">User</a></li>
+<li class="toctree-l2"><a class="reference internal" href="customer.html">Customer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">User</a></li>
 </ul>
 </li>
 </ul>
@@ -139,13 +138,13 @@
         
           <li><a href="modules.html">End Points</a> &raquo;</li>
         
-      <li>Customer</li>
+      <li>User</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/customer.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/user.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -158,26 +157,69 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-server.controller.customer_controller">
-<span id="customer"></span><h1>Customer<a class="headerlink" href="#module-server.controller.customer_controller" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-server.controller.user_controller">
+<span id="user"></span><h1>User<a class="headerlink" href="#module-server.controller.user_controller" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="server.controller.customer_controller.delete_customer">
-<code class="sig-name descname">delete_customer</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.delete_customer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given the customer id it deletes it.</p>
+<dt id="server.controller.user_controller.change_admin_status">
+<code class="sig-name descname">change_admin_status</code><span class="sig-paren">(</span><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.change_admin_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that given the user_id it updates its admin privileges with the
+information sent in the body of the request.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;admin&#39;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – the id of the customer.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<em>int</em>) – the id of the user.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
-<dt id="server.controller.customer_controller.get_all_customers">
-<code class="sig-name descname">get_all_customers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.get_all_customers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that returns all the customers.</p>
+<dt id="server.controller.user_controller.change_user_password">
+<code class="sig-name descname">change_user_password</code><span class="sig-paren">(</span><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.change_user_password" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that given the user_id it updates its password with the
+information sent in the body of the request.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;old_password&#39;</span><span class="p">:</span> <span class="s1">&#39;old_pass&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;new_password&#39;</span><span class="p">:</span> <span class="s1">&#39;new_pass&#39;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<em>int</em>) – the id of the user.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="server.controller.user_controller.delete_user">
+<code class="sig-name descname">delete_user</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.delete_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that given the user id it deletes it.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – the id of the user.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="server.controller.user_controller.get_all_users">
+<code class="sig-name descname">get_all_users</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.get_all_users" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that returns all the users.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>The Customers.</p>
+<dd class="field-odd"><p>The users.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>list.</p>
@@ -186,45 +228,46 @@
 </dd></dl>
 
 <dl class="function">
-<dt id="server.controller.customer_controller.get_customer">
-<code class="sig-name descname">get_customer</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.get_customer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given an id it returns the customer.</p>
+<dt id="server.controller.user_controller.get_user">
+<code class="sig-name descname">get_user</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.get_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that given an id it returns the user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – the id of the customer.</p>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – the id of the user.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The customer</p>
+<dd class="field-even"><p>The user</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="server.model.html#server.model.customer.Customer" title="server.model.customer.Customer">Customer</a></p>
+<dd class="field-odd"><p>User</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
-<dt id="server.controller.customer_controller.post_customer">
-<code class="sig-name descname">post_customer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.post_customer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given the customer data it creates it.</p>
+<dt id="server.controller.user_controller.post_user">
+<code class="sig-name descname">post_user</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.post_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that given the user data it creates it.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;email@example.com&#39;</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
     <span class="s1">&#39;surname&#39;</span><span class="p">:</span> <span class="s1">&#39;surname&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span><span class="p">:</span> <span class="s1">&#39;1234&#39;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – the data of the customer sent in the body of the request.</p>
+<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
-<dt id="server.controller.customer_controller.put_customer">
-<code class="sig-name descname">put_customer</code><span class="sig-paren">(</span><em class="sig-param">customer_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.put_customer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given the customer_id it updates it with the data sent in the
+<dt id="server.controller.user_controller.put_user">
+<code class="sig-name descname">put_user</code><span class="sig-paren">(</span><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.put_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that given the user_id it updates it with the data sent in the
 body of the request.</p>
 <p>Example:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
@@ -236,8 +279,8 @@ body of the request.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>customer_id</strong> (<em>int</em>) – the id of the customer.</p></li>
-<li><p><strong>data</strong> (<em>dict</em>) – the data of the customer sent in the body of the request.</p></li>
+<li><p><strong>user_id</strong> (<em>int</em>) – the id of the user.</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p></li>
 </ul>
 </dd>
 </dl>
@@ -253,10 +296,8 @@ body of the request.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="user.html" class="btn btn-neutral float-right" title="User" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="modules.html" class="btn btn-neutral float-left" title="End Points" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="customer.html" class="btn btn-neutral float-left" title="Customer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

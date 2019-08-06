@@ -5,3 +5,4 @@ End Points
    :maxdepth: 4
 
    customer
+   user

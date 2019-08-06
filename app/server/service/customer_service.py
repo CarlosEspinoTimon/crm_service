@@ -13,7 +13,7 @@ def all_customers():
 def get_a_customer(id):
     customer = Customer.query.get(id)
     if customer:
-        response = jsonify(customer), 200
+        response = jsonify(customer.__str__()), 200
     else:
         response = jsonify('User not found'), 404
     return response
@@ -33,7 +33,7 @@ def create_customer(data):
             created_at=datetime.now(),
             last_modified_at=datetime.now()
         )
-        save_customer(customer)
+        _save_customer(customer)
         response = jsonify(customer.__str__()), 201
     else:
         response = jsonify('User already exists'), 409
@@ -53,7 +53,7 @@ def update_customer(data, customer_id):
             customer.photo_url = data['photo_url']
         customer.last_modified_by = user_id
         customer.last_modified_at = datetime.now()
-        save_customer(customer)
+        _save_customer(customer)
         response = jsonify('Customer sucessfully updated'), 200
     else:
         response = jsonify('User not found'), 404
@@ -67,13 +67,13 @@ def delete(id):
         customer.last_modified_by = user_id
         customer.last_modified_at = datetime.now()
         customer.is_deleted = True
-        save_customer(customer)
+        _save_customer(customer)
         response = jsonify('Customer deleted'), 200
     else:
         response = jsonify('User not found'), 404
     return response
 
 
-def save_customer(customer):
+def _save_customer(customer):
     db.session.add(customer)
     db.session.commit()
