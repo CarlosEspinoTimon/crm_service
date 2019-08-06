@@ -1,4 +1,4 @@
-from flask import Blueprint, abort, jsonify, request
+from flask import Blueprint, jsonify, request
 from flask_cors import CORS
 
 from ..service.customer_service import (
