@@ -163,11 +163,21 @@
 <span id="customer"></span><h1>Customer<a class="headerlink" href="#module-server.controller.customer_controller" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="server.controller.customer_controller.delete_customer">
-<code class="sig-name descname">delete_customer</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.delete_customer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given the customer id it deletes it.</p>
+<code class="sig-name descname">delete_customer</code><span class="sig-paren">(</span><em class="sig-param">customer_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.delete_customer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="delete">
+<dt id="delete--customers-(int-customer_id)">
+<code class="sig-name descname">DELETE </code><code class="sig-name descname">/customers/</code><span class="sig-paren">(</span><em class="property">int: </em><em class="sig-param">customer_id</em><span class="sig-paren">)</span><a class="headerlink" href="#delete--customers-(int-customer_id)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that given the customer id it deletes it.</p>
+<p>This endpoint is protected and only users can use it by passing their
+authentication token through the Authorization Header.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – the id of the customer.</p>
+<dd class="field-odd"><p><strong>customer_id</strong> (<em>int</em>) – the id of the customer.</p>
+</dd>
+<dt class="field-even">Reqheader Authorization</dt>
+<dd class="field-even"><p>Bearer token</p>
 </dd>
 </dl>
 </dd></dl>
@@ -175,7 +185,14 @@
 <dl class="function">
 <dt id="server.controller.customer_controller.get_all_customers">
 <code class="sig-name descname">get_all_customers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.get_all_customers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that returns all the customers.</p>
+<dd><dl class="get">
+<dt id="get--customers-">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/customers/</code><a class="headerlink" href="#get--customers-" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that returns all the customers.</p>
+<p>This endpoint is protected and only users can use it by passing their
+authentication token through the Authorization Header.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The Customers.</p>
@@ -183,16 +200,26 @@
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>list.</p>
 </dd>
+<dt class="field-odd">Reqheader Authorization</dt>
+<dd class="field-odd"><p>Bearer token</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="server.controller.customer_controller.get_customer">
-<code class="sig-name descname">get_customer</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.get_customer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given an id it returns the customer.</p>
+<code class="sig-name descname">get_customer</code><span class="sig-paren">(</span><em class="sig-param">customer_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.get_customer" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="get">
+<dt id="get--customers-(int-customer_id)">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/customers/</code><span class="sig-paren">(</span><em class="property">int: </em><em class="sig-param">customer_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--customers-(int-customer_id)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that given an id it returns the customer.</p>
+<p>This endpoint is protected and only users can use it by passing their
+authentication token through the Authorization Header.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – the id of the customer.</p>
+<dd class="field-odd"><p><strong>customer_id</strong> (<em>int</em>) – the id of the customer.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The customer</p>
@@ -200,15 +227,25 @@
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="server.model.html#server.model.customer.Customer" title="server.model.customer.Customer">Customer</a></p>
 </dd>
+<dt class="field-even">Reqheader Authorization</dt>
+<dd class="field-even"><p>Bearer token</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="server.controller.customer_controller.post_customer">
 <code class="sig-name descname">post_customer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.post_customer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given the customer data it creates it.</p>
+<dd><dl class="post">
+<dt id="post--customers">
+<code class="sig-name descname">POST </code><code class="sig-name descname">/customers</code><a class="headerlink" href="#post--customers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that given the customer data it creates it.</p>
+<p>This endpoint is protected and only users can use it by passing their
+authentication token through the Authorization Header.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;email@example.com&#39;</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
     <span class="s1">&#39;surname&#39;</span><span class="p">:</span> <span class="s1">&#39;surname&#39;</span><span class="p">,</span>
@@ -217,7 +254,10 @@
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – the data of the customer sent in the body of the request.</p>
+<dd class="field-odd"><p><strong>body</strong> (<em>dict</em>) – the data of the customer sent in the body of the request.</p>
+</dd>
+<dt class="field-even">Reqheader Authorization</dt>
+<dd class="field-even"><p>Bearer token</p>
 </dd>
 </dl>
 </dd></dl>
@@ -225,10 +265,17 @@
 <dl class="function">
 <dt id="server.controller.customer_controller.put_customer">
 <code class="sig-name descname">put_customer</code><span class="sig-paren">(</span><em class="sig-param">customer_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.customer_controller.put_customer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given the customer_id it updates it with the data sent in the
+<dd><dl class="put">
+<dt id="put--customers-(int-customer_id)">
+<code class="sig-name descname">PUT </code><code class="sig-name descname">/customers/</code><span class="sig-paren">(</span><em class="property">int: </em><em class="sig-param">customer_id</em><span class="sig-paren">)</span><a class="headerlink" href="#put--customers-(int-customer_id)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that given the customer_id it updates it with the data sent in the
 body of the request.</p>
+<p>This endpoint is protected and only users can use it by passing their
+authentication token through the Authorization Header.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
     <span class="s1">&#39;surname&#39;</span><span class="p">:</span> <span class="s1">&#39;surname&#39;</span><span class="p">,</span>
 <span class="p">}</span>
@@ -238,8 +285,11 @@ body of the request.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>customer_id</strong> (<em>int</em>) – the id of the customer.</p></li>
-<li><p><strong>data</strong> (<em>dict</em>) – the data of the customer sent in the body of the request.</p></li>
+<li><p><strong>body</strong> (<em>dict</em>) – the data of the customer sent in the body of the request.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Reqheader Authorization</dt>
+<dd class="field-even"><p>Bearer token</p>
 </dd>
 </dl>
 </dd></dl>

@@ -164,11 +164,18 @@
 <dl class="function">
 <dt id="server.controller.user_controller.change_admin_status">
 <code class="sig-name descname">change_admin_status</code><span class="sig-paren">(</span><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.change_admin_status" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given the user_id it updates its admin privileges with the
+<dd><dl class="put">
+<dt id="put--users-(int-user_id)-change-admin-status">
+<code class="sig-name descname">PUT </code><code class="sig-name descname">/users/</code><span class="sig-paren">(</span><em class="property">int: </em><em class="sig-param">user_id</em><span class="sig-paren">)</span><code class="sig-name descname">/change-admin-status</code><a class="headerlink" href="#put--users-(int-user_id)-change-admin-status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that given the user_id it updates its admin privileges with the
 information sent in the body of the request. To grant admin privileges you
 must send a 1 and to revoke the privileges, a 0.</p>
+<p>This endpoint is protected and only admin users can use it by passing their
+authentication token through the Authorization Header.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;admin&#39;</span><span class="p">:</span> <span class="mi">1</span>
 <span class="p">}</span>
 </pre></div>
@@ -177,8 +184,11 @@ must send a 1 and to revoke the privileges, a 0.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user_id</strong> (<em>int</em>) – the id of the user.</p></li>
-<li><p><strong>data</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p></li>
+<li><p><strong>body</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Reqheader Authorization</dt>
+<dd class="field-even"><p>Bearer token</p>
 </dd>
 </dl>
 </dd></dl>
@@ -186,10 +196,17 @@ must send a 1 and to revoke the privileges, a 0.</p>
 <dl class="function">
 <dt id="server.controller.user_controller.change_user_password">
 <code class="sig-name descname">change_user_password</code><span class="sig-paren">(</span><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.change_user_password" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given the user_id it updates its password with the
+<dd><dl class="put">
+<dt id="put--users-(int-user_id)-change-password">
+<code class="sig-name descname">PUT </code><code class="sig-name descname">/users/</code><span class="sig-paren">(</span><em class="property">int: </em><em class="sig-param">user_id</em><span class="sig-paren">)</span><code class="sig-name descname">/change-password</code><a class="headerlink" href="#put--users-(int-user_id)-change-password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that given the user_id it updates its password with the
 information sent in the body of the request.</p>
+<p>This endpoint is protected and only admin users can use it by passing their
+authentication token through the Authorization Header.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;old_password&#39;</span><span class="p">:</span> <span class="s1">&#39;old_pass&#39;</span><span class="p">,</span>
     <span class="s1">&#39;new_password&#39;</span><span class="p">:</span> <span class="s1">&#39;new_pass&#39;</span><span class="p">,</span>
 <span class="p">}</span>
@@ -199,19 +216,32 @@ information sent in the body of the request.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user_id</strong> (<em>int</em>) – the id of the user.</p></li>
-<li><p><strong>data</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p></li>
+<li><p><strong>body</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Reqheader Authorization</dt>
+<dd class="field-even"><p>Bearer token</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="server.controller.user_controller.delete_user">
-<code class="sig-name descname">delete_user</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.delete_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given the user id it deletes it.</p>
+<code class="sig-name descname">delete_user</code><span class="sig-paren">(</span><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.delete_user" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="delete">
+<dt id="delete--users-(int-user_id)">
+<code class="sig-name descname">DELETE </code><code class="sig-name descname">/users/</code><span class="sig-paren">(</span><em class="property">int: </em><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#delete--users-(int-user_id)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that given the user id it deletes it.</p>
+<p>This endpoint is protected and only admin users can use it by passing their
+authentication token through the Authorization Header.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – the id of the user.</p>
+<dd class="field-odd"><p><strong>user_id</strong> (<em>int</em>) – the id of the user.</p>
+</dd>
+<dt class="field-even">Reqheader Authorization</dt>
+<dd class="field-even"><p>Bearer token</p>
 </dd>
 </dl>
 </dd></dl>
@@ -219,7 +249,14 @@ information sent in the body of the request.</p>
 <dl class="function">
 <dt id="server.controller.user_controller.get_all_users">
 <code class="sig-name descname">get_all_users</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.get_all_users" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that returns all the users.</p>
+<dd><dl class="get">
+<dt id="get--users-">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/users/</code><a class="headerlink" href="#get--users-" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that returns all the users.</p>
+<p>This endpoint is protected and only admin users can use it by passing their
+authentication token through the Authorization Header.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>The users.</p>
@@ -227,16 +264,26 @@ information sent in the body of the request.</p>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>list.</p>
 </dd>
+<dt class="field-odd">Reqheader Authorization</dt>
+<dd class="field-odd"><p>Bearer token</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="server.controller.user_controller.get_user">
-<code class="sig-name descname">get_user</code><span class="sig-paren">(</span><em class="sig-param">id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.get_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given an id it returns the user.</p>
+<code class="sig-name descname">get_user</code><span class="sig-paren">(</span><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.get_user" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="get">
+<dt id="get--users-(int-user_id)">
+<code class="sig-name descname">GET </code><code class="sig-name descname">/users/</code><span class="sig-paren">(</span><em class="property">int: </em><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#get--users-(int-user_id)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that given an id it returns the user.</p>
+<p>This endpoint is protected and only admin users can use it by passing their
+authentication token through the Authorization Header.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – the id of the user.</p>
+<dd class="field-odd"><p><strong>user_id</strong> (<em>int</em>) – the id of the user.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The user</p>
@@ -244,15 +291,25 @@ information sent in the body of the request.</p>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>User</p>
 </dd>
+<dt class="field-even">Reqheader Authorization</dt>
+<dd class="field-even"><p>Bearer token</p>
+</dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="server.controller.user_controller.post_user">
 <code class="sig-name descname">post_user</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.post_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given the user data it creates it.</p>
+<dd><dl class="post">
+<dt id="post--users">
+<code class="sig-name descname">POST </code><code class="sig-name descname">/users</code><a class="headerlink" href="#post--users" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that given the user data it creates it.</p>
+<p>This endpoint is protected and only admin users can use it by passing their
+authentication token through the Authorization Header.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;email@example.com&#39;</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
     <span class="s1">&#39;surname&#39;</span><span class="p">:</span> <span class="s1">&#39;surname&#39;</span><span class="p">,</span>
@@ -262,7 +319,10 @@ information sent in the body of the request.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p>
+<dd class="field-odd"><p><strong>body</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p>
+</dd>
+<dt class="field-even">Reqheader Authorization</dt>
+<dd class="field-even"><p>Bearer token</p>
 </dd>
 </dl>
 </dd></dl>
@@ -270,10 +330,17 @@ information sent in the body of the request.</p>
 <dl class="function">
 <dt id="server.controller.user_controller.put_user">
 <code class="sig-name descname">put_user</code><span class="sig-paren">(</span><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.user_controller.put_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function that given the user_id it updates it with the data sent in the
+<dd><dl class="put">
+<dt id="put--users-(int-user_id)">
+<code class="sig-name descname">PUT </code><code class="sig-name descname">/users/</code><span class="sig-paren">(</span><em class="property">int: </em><em class="sig-param">user_id</em><span class="sig-paren">)</span><a class="headerlink" href="#put--users-(int-user_id)" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Function that given the user_id it updates it with the data sent in the
 body of the request.</p>
+<p>This endpoint is protected and only admin users can use it by passing their
+authentication token through the Authorization Header.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span>
     <span class="s1">&#39;surname&#39;</span><span class="p">:</span> <span class="s1">&#39;surname&#39;</span><span class="p">,</span>
 <span class="p">}</span>
@@ -283,8 +350,11 @@ body of the request.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user_id</strong> (<em>int</em>) – the id of the user.</p></li>
-<li><p><strong>data</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p></li>
+<li><p><strong>body</strong> (<em>dict</em>) – the data of the user sent in the body of the request.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Reqheader Authorization</dt>
+<dd class="field-even"><p>Bearer token</p>
 </dd>
 </dl>
 </dd></dl>

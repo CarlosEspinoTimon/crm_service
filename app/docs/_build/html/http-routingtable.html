@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Authentication &mdash; Flask CRM 0.0.1 documentation</title>
+  <title>HTTP Routing Table &mdash; Flask CRM 0.0.1 documentation</title>
   
 
   
@@ -35,7 +35,13 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="User" href="user.html" /> 
+ 
+
+    <script type="text/javascript">
+      DOCUMENTATION_OPTIONS.COLLAPSE_INDEX = true;
+    </script>
+
+
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,13 +91,8 @@
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 <p class="caption"><span class="caption-text">API Reference:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">End Points</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="customer.html">Customer</a></li>
-<li class="toctree-l2"><a class="reference internal" href="user.html">User</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Authentication</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">End Points</a></li>
 </ul>
 
             
@@ -137,16 +138,10 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-          <li><a href="modules.html">End Points</a> &raquo;</li>
-        
-      <li>Authentication</li>
+      <li>HTTP Routing Table</li>
     
     
       <li class="wy-breadcrumbs-aside">
-        
-            
-            <a href="_sources/authentication.rst.txt" rel="nofollow"> View page source</a>
-          
         
       </li>
     
@@ -158,41 +153,97 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-server.controller.auth_controller">
-<span id="authentication"></span><h1>Authentication<a class="headerlink" href="#module-server.controller.auth_controller" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="server.controller.auth_controller.login">
-<code class="sig-name descname">login</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#server.controller.auth_controller.login" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="post">
-<dt id="post--auth-login">
-<code class="sig-name descname">POST </code><code class="sig-name descname">/auth/login</code><a class="headerlink" href="#post--auth-login" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
-<p>Function that given a email and a password as headers it checks if there
-is a user in the database and generates a token.</p>
-<p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;email@example.com&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;name&#39;</span>
-    <span class="p">}</span>
-</pre></div>
-</div>
-</dd></dl>
+   <h1>HTTP Routing Table</h1>
 
-</div>
+   <div class="modindex-jumpbox">
+   <a href="#cap-/auth"><strong>/auth</strong></a> | 
+   <a href="#cap-/customers"><strong>/customers</strong></a> | 
+   <a href="#cap-/users"><strong>/users</strong></a>
+   </div>
+
+   <table class="indextable modindextable">
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/auth"><td></td><td>
+       <strong>/auth</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="authentication.html#post--auth-login"><code class="xref">POST /auth/login</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/customers"><td></td><td>
+       <strong>/customers</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="server.controller.html#get--customers-"><code class="xref">GET /customers/</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="server.controller.html#get--customers-(int-customer_id)"><code class="xref">GET /customers/(int:customer_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="server.controller.html#post--customers"><code class="xref">POST /customers</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="server.controller.html#put--customers-(int-customer_id)"><code class="xref">PUT /customers/(int:customer_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="server.controller.html#delete--customers-(int-customer_id)"><code class="xref">DELETE /customers/(int:customer_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/users"><td></td><td>
+       <strong>/users</strong></td><td></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="user.html#get--users-"><code class="xref">GET /users/</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="user.html#get--users-(int-user_id)"><code class="xref">GET /users/(int:user_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="user.html#post--users"><code class="xref">POST /users</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="user.html#put--users-(int-user_id)"><code class="xref">PUT /users/(int:user_id)</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="user.html#put--users-(int-user_id)-change-admin-status"><code class="xref">PUT /users/(int:user_id)/change-admin-status</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="user.html#put--users-(int-user_id)-change-password"><code class="xref">PUT /users/(int:user_id)/change-password</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="user.html#delete--users-(int-user_id)"><code class="xref">DELETE /users/(int:user_id)</code></a></td><td>
+       <em></em></td></tr>
+   </table>
 
 
            </div>
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-      
-        <a href="user.html" class="btn btn-neutral float-left" title="User" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

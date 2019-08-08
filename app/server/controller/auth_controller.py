@@ -10,8 +10,19 @@ CORS(auth, max_age=30*86400)
 @auth.route('/login', methods=['POST'])
 def login():
     """
+    .. http:post:: /auth/login
+
     Function that given a email and a password as headers it checks if there
     is a user in the database and generates a token.
+
+
+    Example::
+
+        body = {
+            'email': 'email@example.com',
+            'name': 'name'
+            }
+
     """
     email = request.headers.get('email')
     password = request.headers.get('password')
