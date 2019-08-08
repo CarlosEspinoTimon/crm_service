@@ -73,7 +73,10 @@ def modify_admin_status(data, user_id):
     user = User.query.get(user_id)
     if user:
         admin_id = 1
-        user.admin = data.get('admin')
+        privileges = data.get('admin')
+        if privileges not in [0, 1]:
+            return jsonify('Unprocessable Entity, wrong input'), 422
+        user.admin = privileges
         user.admin_privileges_by = admin_id
         user.last_modified_by = admin_id
         user.last_modified_at = datetime.now()

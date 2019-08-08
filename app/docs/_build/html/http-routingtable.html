@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Python Module Index &mdash; Flask CRM 0.0.1 documentation</title>
+  <title>HTTP Routing Table &mdash; Flask CRM 0.0.1 documentation</title>
   
 
   
@@ -36,6 +36,10 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
  
+
+    <script type="text/javascript">
+      DOCUMENTATION_OPTIONS.COLLAPSE_INDEX = true;
+    </script>
 
 
 </head>
@@ -134,7 +138,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Python Module Index</li>
+      <li>HTTP Routing Table</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -150,71 +154,88 @@
            <div itemprop="articleBody">
             
 
-   <h1>Python Module Index</h1>
+   <h1>HTTP Routing Table</h1>
 
    <div class="modindex-jumpbox">
-   <a href="#cap-s"><strong>s</strong></a>
+   <a href="#cap-/auth"><strong>/auth</strong></a> | 
+   <a href="#cap-/customers"><strong>/customers</strong></a> | 
+   <a href="#cap-/users"><strong>/users</strong></a>
    </div>
 
    <table class="indextable modindextable">
      <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
-     <tr class="cap" id="cap-s"><td></td><td>
-       <strong>s</strong></td><td></td></tr>
+     <tr class="cap" id="cap-/auth"><td></td><td>
+       <strong>/auth</strong></td><td></td></tr>
      <tr>
-       <td><img src="_static/minus.png" class="toggler"
-              id="toggle-1" style="display: none" alt="-" /></td>
+       <td></td>
        <td>
-       <code class="xref">server</code></td><td>
+       <a href="authentication.html#post--auth-login"><code class="xref">POST /auth/login</code></a></td><td>
        <em></em></td></tr>
-     <tr class="cg-1">
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/customers"><td></td><td>
+       <strong>/customers</strong></td><td></td></tr>
+     <tr>
        <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="server.controller.html#module-server.controller"><code class="xref">server.controller</code></a></td><td>
+       <td>
+       <a href="server.controller.html#get--customers-"><code class="xref">GET /customers/</code></a></td><td>
        <em></em></td></tr>
-     <tr class="cg-1">
+     <tr>
        <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="authentication.html#module-server.controller.auth_controller"><code class="xref">server.controller.auth_controller</code></a></td><td>
+       <td>
+       <a href="server.controller.html#get--customers-(int-customer_id)"><code class="xref">GET /customers/(int:customer_id)</code></a></td><td>
        <em></em></td></tr>
-     <tr class="cg-1">
+     <tr>
        <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="server.controller.html#module-server.controller.customer_controller"><code class="xref">server.controller.customer_controller</code></a></td><td>
+       <td>
+       <a href="server.controller.html#post--customers"><code class="xref">POST /customers</code></a></td><td>
        <em></em></td></tr>
-     <tr class="cg-1">
+     <tr>
        <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="user.html#module-server.controller.user_controller"><code class="xref">server.controller.user_controller</code></a></td><td>
+       <td>
+       <a href="server.controller.html#put--customers-(int-customer_id)"><code class="xref">PUT /customers/(int:customer_id)</code></a></td><td>
        <em></em></td></tr>
-     <tr class="cg-1">
+     <tr>
        <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="server.model.html#module-server.model"><code class="xref">server.model</code></a></td><td>
+       <td>
+       <a href="server.controller.html#delete--customers-(int-customer_id)"><code class="xref">DELETE /customers/(int:customer_id)</code></a></td><td>
        <em></em></td></tr>
-     <tr class="cg-1">
+     <tr class="pcap"><td></td><td>&#160;</td><td></td></tr>
+     <tr class="cap" id="cap-/users"><td></td><td>
+       <strong>/users</strong></td><td></td></tr>
+     <tr>
        <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="server.model.html#module-server.model.customer"><code class="xref">server.model.customer</code></a></td><td>
+       <td>
+       <a href="user.html#get--users-"><code class="xref">GET /users/</code></a></td><td>
        <em></em></td></tr>
-     <tr class="cg-1">
+     <tr>
        <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="server.service.html#module-server.service"><code class="xref">server.service</code></a></td><td>
+       <td>
+       <a href="user.html#get--users-(int-user_id)"><code class="xref">GET /users/(int:user_id)</code></a></td><td>
        <em></em></td></tr>
-     <tr class="cg-1">
+     <tr>
        <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="server.service.html#module-server.service.customer_service"><code class="xref">server.service.customer_service</code></a></td><td>
+       <td>
+       <a href="user.html#post--users"><code class="xref">POST /users</code></a></td><td>
        <em></em></td></tr>
-     <tr class="cg-1">
+     <tr>
        <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="server.util.html#module-server.util"><code class="xref">server.util</code></a></td><td>
+       <td>
+       <a href="user.html#put--users-(int-user_id)"><code class="xref">PUT /users/(int:user_id)</code></a></td><td>
        <em></em></td></tr>
-     <tr class="cg-1">
+     <tr>
        <td></td>
-       <td>&#160;&#160;&#160;
-       <a href="server.util.html#module-server.util.decorator"><code class="xref">server.util.decorator</code></a></td><td>
+       <td>
+       <a href="user.html#put--users-(int-user_id)-change-admin-status"><code class="xref">PUT /users/(int:user_id)/change-admin-status</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="user.html#put--users-(int-user_id)-change-password"><code class="xref">PUT /users/(int:user_id)/change-password</code></a></td><td>
+       <em></em></td></tr>
+     <tr>
+       <td></td>
+       <td>
+       <a href="user.html#delete--users-(int-user_id)"><code class="xref">DELETE /users/(int:user_id)</code></a></td><td>
        <em></em></td></tr>
    </table>
 

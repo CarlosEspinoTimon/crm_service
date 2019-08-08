@@ -24,7 +24,8 @@ class TestCustomer(BaseTestClass):
             '/customers',
             data=json.dumps(data),
             headers={
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': self.user_token
             })
         self.assertEqual(res.status_code, 201)
         data = json.loads(res.get_data(as_text=True))
@@ -47,7 +48,8 @@ class TestCustomer(BaseTestClass):
         res = self.tester_app.get(
             '/customers/1',
             headers={
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': self.user_token
             })
         self.assertEqual(res.status_code, 200)
         data = json.loads(res.get_data(as_text=True))
@@ -79,9 +81,11 @@ class TestCustomer(BaseTestClass):
             'is_deleted': False,
         }
         self.create_customer(customer)
-        res = self.tester_app.get('/customers/', headers={
-                                            'Content-Type': 'application/json',
-                                   })
+        res = self.tester_app.get('/customers/',
+                                  headers={
+                                    'Content-Type': 'application/json',
+                                    'Authorization': self.user_token
+                                  })
         data = json.loads(res.get_data(as_text=True))
         self.assertEqual(res.status_code, 200)
         self.assertEqual(len(data), 2)
@@ -96,7 +100,8 @@ class TestCustomer(BaseTestClass):
         res = self.tester_app.put('/customers/1',
                                   data=json.dumps(data),
                                   headers={
-                                            'Content-Type': 'application/json',
+                                      'Content-Type': 'application/json',
+                                      'Authorization': self.user_token
                                    })
         data = json.loads(res.get_data(as_text=True))
         self.assertEqual(res.status_code, 200)
@@ -109,7 +114,8 @@ class TestCustomer(BaseTestClass):
         self.create_customer()
         res = self.tester_app.delete('/customers/1',
                                      headers={
-                                         'Content-Type': 'application/json'
+                                         'Content-Type': 'application/json',
+                                         'Authorization': self.user_token
                                             })
         self.assertEqual(res.status_code, 200)
         customer = Customer.query.get(1)

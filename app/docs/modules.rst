@@ -6,3 +6,4 @@ End Points
 
    customer
    user
+   authentication

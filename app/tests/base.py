@@ -2,6 +2,8 @@
 # coding=utf-8
 
 import unittest
+import jwt
+from time import time
 
 import pathmagic
 
@@ -44,6 +46,8 @@ class BaseTestClass(unittest.TestCase):
         self._ctx = self.app.test_request_context()
         self._ctx.push()
         db.create_all()
+        self.admin_token = self.generate_token(True)
+        self.user_token = self.generate_token(False)
 
     def tearDown(self):
         db.session.remove()
@@ -88,3 +92,14 @@ class BaseTestClass(unittest.TestCase):
         user.set_password('1234')
         db.session.add(user)
         db.session.flush()
+
+    def generate_token(self, admin):
+        '''
+        Function that generates a token for the given user type
+        '''
+        token = jwt.encode({
+            'id': '1',
+            'exp': time() + 300,
+            'admin': admin
+        }, self.app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+        return 'Bearer {}'.format(token)
