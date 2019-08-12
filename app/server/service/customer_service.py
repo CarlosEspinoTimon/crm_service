@@ -22,14 +22,13 @@ def get_a_customer(id):
 def create_customer(data):
     customer = Customer.query.filter_by(email=data['email']).first()
     if not customer:
-        user_id = 1  # TODO use admin id
         customer = Customer(
             email=data.get('email'),
             name=data.get('name'),
             surname=data.get('surname'),
             photo_url="http://photo-url.com",
-            created_by=user_id,
-            last_modified_by=user_id,
+            created_by=data.get('id'),
+            last_modified_by=data.get('id'),
             created_at=datetime.now(),
             last_modified_at=datetime.now()
         )
@@ -43,7 +42,6 @@ def create_customer(data):
 def update_customer(data, customer_id):
     customer = Customer.query.get(customer_id)
     if customer:
-        user_id = 1
         data['photo_url'] = "http://photo-url.com"
         if data.get('name'):
             customer.name = data['name']
@@ -51,7 +49,7 @@ def update_customer(data, customer_id):
             customer.surname = data['surname']
         if data.get('photo_url'):
             customer.photo_url = data['photo_url']
-        customer.last_modified_by = user_id
+        customer.last_modified_by = data.get('id')
         customer.last_modified_at = datetime.now()
         _save_customer(customer)
         response = jsonify('Customer sucessfully updated'), 200
@@ -60,10 +58,9 @@ def update_customer(data, customer_id):
     return response
 
 
-def delete(id):
-    customer = Customer.query.get(id)
+def delete(customer_id, user_id):
+    customer = Customer.query.get(customer_id)
     if customer:
-        user_id = 1
         customer.last_modified_by = user_id
         customer.last_modified_at = datetime.now()
         customer.is_deleted = True

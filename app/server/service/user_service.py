@@ -10,9 +10,9 @@ def all_users():
                     User.query.filter_by(is_deleted=False)]), 200
 
 
-def get_a_user(id):
-    user = User.query.get(id)
-    if user:
+def get_a_user(user_id):
+    user = User.query.get(user_id)
+    if user and user.is_deleted is False:
         response = jsonify(user.__str__()), 200
     else:
         response = jsonify('User not found'), 404
@@ -20,17 +20,16 @@ def get_a_user(id):
 
 
 def create_user(data):
-    user = User.query.filter_by(email=data['email']).first()
+    user = User.query.filter_by(email=data.get('email')).first()
     if not user:
-        admin_id = 1  # TODO use admin id
         user = User(
             email=data.get('email'),
             name=data.get('name'),
             surname=data.get('surname'),
             created_at=datetime.now(),
-            created_by=admin_id,
+            created_by=data.get('id'),
             modified_at=datetime.now(),
-            modified_by=admin_id
+            modified_by=data.get('id')
         )
         user.set_password(data.get('password'))
         _save_user(user)
@@ -43,11 +42,10 @@ def create_user(data):
 def update_user(data, user_id):
     user = User.query.get(user_id)
     if user:
-        admin_id = 1
         user.name = data.get('name')
         user.surname = data.get('surname')
-        user.last_modified_by = admin_id
-        user.last_modified_at = datetime.now()
+        user.modified_by = data.get('id')
+        user.modified_at = datetime.now()
         _save_user(user)
         response = jsonify('User sucessfully updated'), 200
     else:
@@ -55,12 +53,11 @@ def update_user(data, user_id):
     return response
 
 
-def delete(id):
-    user = User.query.get(id)
+def delete(user_id, admin_id):
+    user = User.query.get(user_id)
     if user:
-        admin_id = 1
-        user.last_modified_by = admin_id
-        user.last_modified_at = datetime.now()
+        user.modified_by = admin_id
+        user.modified_at = datetime.now()
         user.is_deleted = True
         _save_user(user)
         response = jsonify('User deleted'), 200
@@ -72,14 +69,13 @@ def delete(id):
 def modify_admin_status(data, user_id):
     user = User.query.get(user_id)
     if user:
-        admin_id = 1
         privileges = data.get('admin')
         if privileges not in [0, 1]:
             return jsonify('Unprocessable Entity, wrong input'), 422
         user.admin = privileges
-        user.admin_privileges_by = admin_id
-        user.last_modified_by = admin_id
-        user.last_modified_at = datetime.now()
+        user.admin_privileges_by = data.get('id')
+        user.modified_by = data.get('id')
+        user.modified_at = datetime.now()
         _save_user(user)
         response = jsonify('User sucessfully updated'), 200
     else:
@@ -90,12 +86,11 @@ def modify_admin_status(data, user_id):
 def change_password(data, user_id):
     user = User.query.get(user_id)
     if user:
-        admin_id = 1
         if not user.check_password(data.get('old_password')):
             return jsonify('Wrong password'), 401
         user.set_password(data.get('new_password'))
-        user.last_modified_by = admin_id
-        user.last_modified_at = datetime.now()
+        user.modified_by = data.get('id')
+        user.modified_at = datetime.now()
         _save_user(user)
         response = jsonify('Password sucessfully updated'), 200
     else:

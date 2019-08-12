@@ -89,6 +89,7 @@ class TestUser(BaseTestClass):
             'Authorization': self.admin_token
         })
         data = json.loads(res.get_data(as_text=True))
+
         self.assertEqual(res.status_code, 200)
         self.assertEqual(len(data), 2)
 
@@ -117,6 +118,7 @@ class TestUser(BaseTestClass):
                                          'Content-Type': 'application/json',
                                          'Authorization': self.admin_token
                                      })
+
         self.assertEqual(res.status_code, 200)
         user = User.query.get(1)
         self.assertEqual(user.is_deleted, True)

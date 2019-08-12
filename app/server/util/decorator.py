@@ -9,18 +9,12 @@ import jwt
 def check_admin_token(func):
     @wraps(func)
     def decorated_funcion(*args, **kwargs):
-        token = request.headers.get('Authorization')
-        if token:
-            token = token.split('Bearer ')[1]
-            payload, exception = process_token(token)
-            if exception:
-                return payload
-            if payload.get('admin') is True:
-                return func(*args, **kwargs)
-            else:
-                return jsonify('Forbidden'), 403
-        else:
-            return jsonify('Forbidden'), 403
+        payload, error, kwargs = get_token_data(**kwargs)
+        if error:
+            return payload
+        if payload.get('admin') is True:
+            return func(*args, **kwargs)
+        return jsonify('Forbidden'), 403
 
     return decorated_funcion
 
@@ -28,29 +22,44 @@ def check_admin_token(func):
 def check_user_token(func):
     @wraps(func)
     def decorated_funcion(*args, **kwargs):
-        token = request.headers.get('Authorization')
-        if token:
-            token = token.split('Bearer ')[1]
-            payload, exception = process_token(token)
-            if exception:
-                return payload
-            else:
-                return func(*args, **kwargs)
+        payload, error, kwargs = get_token_data(**kwargs)
+        if error:
+            return payload
         else:
-            return jsonify('Forbidden'), 403
+            return func(*args, **kwargs)
 
     return decorated_funcion
 
 
-def process_token(token):
+def get_token_data(**kwargs):
+    authorization_header = request.headers.get('Authorization')
+    if authorization_header:
+        token = authorization_header.split('Bearer ')[1]
+        return process_token(token, **kwargs)
+    else:
+        return jsonify('Forbidden'), 403, None
+
+
+def process_token(token, **kwargs):
     try:
         payload = jwt.decode(
             token,
             app.config['SECRET_KEY'],
             algorithms=['HS256']
-            )
+        )
+        kwargs = process_id_from_token(payload, **kwargs)
     except jwt.ExpiredSignatureError:
-        return jsonify('''Token expired'''), 401
+        return jsonify('''Token expired'''), 401, None
     except jwt.InvalidSignatureError:
-        return jsonify('''Signature verification failed'''), 401
-    return payload, False
+        return jsonify('''Signature verification failed'''), 401, None
+    except Exception as _:
+        return jsonify('''Signature verification failed'''), 401, None
+    return payload, False, kwargs
+
+
+def process_id_from_token(payload, **kwargs):
+    if request.method == 'DELETE':
+        kwargs['id_obtained_from_token'] = payload['id']
+    elif request.method != 'GET':
+        request.json['id'] = payload['id']
+    return kwargs
