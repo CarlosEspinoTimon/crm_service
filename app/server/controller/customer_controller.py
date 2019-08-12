@@ -71,6 +71,10 @@ def post_customer():
             'email': 'email@example.com',
             'name': 'name',
             'surname': 'surname',
+            'photo': {
+                'str_image': 'aXk39jacml',
+                'extension': 'jpg'
+            }
         }
 
     :param body: the data of the customer sent in the body of the request.
@@ -99,6 +103,10 @@ def put_customer(customer_id):
         body = {
             'name': 'name',
             'surname': 'surname',
+            'photo': {
+                'str_image': 'aXk39jacml',
+                'extension': 'jpg'
+            }
         }
 
     :param customer_id: the id of the customer.
