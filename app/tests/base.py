@@ -98,7 +98,7 @@ class BaseTestClass(unittest.TestCase):
         Function that generates a token for the given user type
         '''
         token = jwt.encode({
-            'id': '1',
+            'id': 1,
             'exp': time() + 300,
             'admin': admin
         }, self.app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')

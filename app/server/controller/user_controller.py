@@ -175,7 +175,7 @@ def change_user_password(user_id):
 
 @users.route('/<int:user_id>', methods=['DELETE'])
 @check_admin_token
-def delete_user(user_id):
+def delete_user(user_id, id_obtained_from_token):
     """
     .. http:delete:: /users/(int:user_id)
 
@@ -188,4 +188,4 @@ def delete_user(user_id):
     :type user_id: int
     :reqheader Authorization: Bearer token
     """
-    return delete(user_id)
+    return delete(user_id, id_obtained_from_token)

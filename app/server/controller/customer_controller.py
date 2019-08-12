@@ -113,7 +113,7 @@ def put_customer(customer_id):
 
 @customers.route('/<int:customer_id>', methods=['DELETE'])
 @check_user_token
-def delete_customer(customer_id):
+def delete_customer(customer_id, id_obtained_from_token):
     """
     .. http:delete:: /customers/(int:customer_id)
 
@@ -126,4 +126,4 @@ def delete_customer(customer_id):
     :type customer_id: int
     :reqheader Authorization: Bearer token
     """
-    return delete(customer_id)
+    return delete(customer_id, id_obtained_from_token)
