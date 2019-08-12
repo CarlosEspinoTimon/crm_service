@@ -1,0 +1,34 @@
+echo "Skip pre-commit hooks with --no-verify (not recommended).\n" 
+
+(cd development_environment && make backend-tests)
+
+if [ $? -lt 1 ]
+    then
+        echo "Tests passed. Keek going with the checks...\n"
+    else
+        echo "Tests not passed. Fix the errors before commiting the changes.\n"
+        exit 1
+fi
+
+if [ `((cd development_environment && make code-style) |  wc -l)` -eq 1 ]; 
+then
+    echo "\nThere are no code-style errors, the commit can proceed.\n"
+else
+    echo "\nThere are code-style errors, run make code-style-verbose to see the errors.\n"
+    exit 1
+fi
+
+echo "Generating documentation before push.\n"
+(cd development_environment && make documentation)
+
+if [ $? -lt 1 ]
+    then
+        echo "Documentation generated.\n"
+    else
+        echo "Something went wrong.\n"
+        exit 1
+fi
+
+git add app/docs/
+
+exit 0

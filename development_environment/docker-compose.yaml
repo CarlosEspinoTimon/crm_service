@@ -1,0 +1,60 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ../app/
+      args:
+        username: "nonroot"
+        GROUP_ID: "${GROUP_ID}"
+        USER_ID: "${USER_ID}"
+    ports:
+     - "5000:5000"
+    depends_on:
+      - db
+      - db_test
+    volumes:
+      - ../app:/app
+    networks:
+      crm:
+        ipv4_address: 10.5.0.101
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'app_db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'root_super_password'
+    ports:
+      - '3306:3306'
+    volumes:
+      - crm_db:/var/lib/mysql
+    networks:
+      crm:
+        ipv4_address: 10.5.0.102
+  db_test:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: 'test_db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'root_super_password'
+    ports:
+      - '3307:3306'
+    volumes:
+      - crm_test_db:/var/lib/mysql
+    networks:
+      crm:
+        ipv4_address: 10.5.0.103
+    
+    
+networks:
+  crm:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.5.0.0/24
+
+volumes:
+  crm_db:
+  crm_test_db:
