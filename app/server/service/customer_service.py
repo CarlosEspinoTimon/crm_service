@@ -3,6 +3,7 @@ from flask import jsonify
 
 from server import db
 from ..model.customer import Customer
+from ..util.image_upload import upload_image
 
 
 def all_customers():
@@ -22,11 +23,12 @@ def get_a_customer(id):
 def create_customer(data):
     customer = Customer.query.filter_by(email=data['email']).first()
     if not customer:
+        photo_url = get_photo_url(data)
         customer = Customer(
             email=data.get('email'),
             name=data.get('name'),
             surname=data.get('surname'),
-            photo_url="http://photo-url.com",
+            photo_url=photo_url,
             created_by=data.get('id'),
             last_modified_by=data.get('id'),
             created_at=datetime.now(),
@@ -42,13 +44,13 @@ def create_customer(data):
 def update_customer(data, customer_id):
     customer = Customer.query.get(customer_id)
     if customer:
-        data['photo_url'] = "http://photo-url.com"
+        photo_url = get_photo_url(data)
         if data.get('name'):
             customer.name = data['name']
         if data.get('surname'):
             customer.surname = data['surname']
-        if data.get('photo_url'):
-            customer.photo_url = data['photo_url']
+        if photo_url:
+            customer.photo_url = photo_url
         customer.last_modified_by = data.get('id')
         customer.last_modified_at = datetime.now()
         _save_customer(customer)
@@ -69,6 +71,16 @@ def delete(customer_id, user_id):
     else:
         response = jsonify('User not found'), 404
     return response
+
+
+def get_photo_url(data):
+    photo_url = None
+    if data.get('photo'):
+        image = data['photo'].get('str_image')
+        extension = data['photo'].get('extension')
+        content_type = 'image/{}'.format(extension[1:])
+        photo_url = upload_image(image, content_type, extension)
+    return photo_url
 
 
 def _save_customer(customer):
