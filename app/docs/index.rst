@@ -3,31 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Flask CRM's documentation!
-=====================================
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
-   install
-   support
-   
-
-API Reference
-=============
+Welcome to Flask CRM's API Reference
+====================================
 
 .. toctree::
    :maxdepth: 2
    :caption: API Reference:
 
    modules
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
