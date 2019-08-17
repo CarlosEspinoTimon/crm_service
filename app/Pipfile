@@ -18,6 +18,8 @@ sphinx = "*"
 sphinx-rtd-theme = "*"
 mysqlclient = "*"
 sphinxcontrib-httpdomain = "*"
+google-api-python-client = "*"
+google-cloud-storage = "*"
 
 [requires]
 python_version = "3.7"
