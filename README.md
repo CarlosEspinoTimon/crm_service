@@ -65,7 +65,11 @@ The modules have to be installed in the server that is inside the container, so 
 This will install the module in the container and it will be added to the Pipfile which is shared with the host and tracked in the repository.
 
 ## __Documentation__
-As you can see in the GitHooks section, this proyect is configured to automatically generate the documentation for the API with Sphinx. The generated html code is in `app/docs/_build/html/` you can open the `index.html` and navigate through the documentation.
+As you can see in the GitHooks section, this proyect is configured to automatically generate the documentation for the API with Sphinx before each commit. The generated html code is in `app/docs/_build/html/` you can open the `index.html` and navigate through the documentation.
+
+If you want to see the documentation without doing any commit you can run (from the `development_environment`):
+
+`make documentation`
 
 ## __Deployment__
 ### __Automated deployment__
