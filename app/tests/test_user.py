@@ -3,6 +3,7 @@
 
 import unittest
 import json
+from datetime import datetime
 
 import pathmagic
 
@@ -21,8 +22,8 @@ class TestUser(BaseTestClass):
         'admin_privileges_by': None,
         'created_by': 1,
         'modified_by': 1,
-        'created_at': '2019-05-24 11:29:43.432020',
-        'modified_at': '2019-05-24 11:29:43.432020',
+        'created_at': datetime.now(),
+        'modified_at': datetime.now(),
         'password_hash': '1234',
         'is_deleted': False,
     }

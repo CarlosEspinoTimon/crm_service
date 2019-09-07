@@ -1,19 +1,29 @@
 from datetime import datetime
-from flask import jsonify
+from flask import jsonify, abort
 
 from server import db
-from ..model.user import User
+from ..model.user import (
+    User,
+    UserSchema,
+    UpdateUserSchema,
+    CreateUserSchema,
+    ModifyAdminStatusSchema,
+    ChangePasswordSchema
+)
 
 
 def all_users():
-    return jsonify([user.__str__() for user in
-                    User.query.filter_by(is_deleted=False)]), 200
+    user_schema = UserSchema(many=True)
+    users = User.query.filter_by(is_deleted=False)
+    response = user_schema.dump(users)
+    return jsonify(response), 200
 
 
 def get_a_user(user_id):
     user = User.query.get(user_id)
     if user and user.is_deleted is False:
-        response = jsonify(user.__str__()), 200
+        user_schema = UserSchema()
+        response = user_schema.dump(user), 200
     else:
         response = jsonify('User not found'), 404
     return response
@@ -21,7 +31,11 @@ def get_a_user(user_id):
 
 def create_user(data):
     user = User.query.filter_by(email=data.get('email')).first()
-    if not user:
+    create_user_schema = CreateUserSchema()
+    errors = create_user_schema.validate(data)
+    if errors:
+        response = jsonify(errors), 400
+    elif not user:
         user = User(
             email=data.get('email'),
             name=data.get('name'),
@@ -33,7 +47,8 @@ def create_user(data):
         )
         user.set_password(data.get('password'))
         _save_user(user)
-        response = jsonify(user.__str__()), 201
+        user_schema = UserSchema()
+        response = user_schema.dump(user), 201
     else:
         response = jsonify('User already exists'), 409
     return response
@@ -41,7 +56,11 @@ def create_user(data):
 
 def update_user(data, user_id):
     user = User.query.get(user_id)
-    if user:
+    update_user_schema = UpdateUserSchema()
+    errors = update_user_schema.validate(data)
+    if errors:
+        response = jsonify(errors), 400
+    elif user:
         user.name = data.get('name')
         user.surname = data.get('surname')
         user.modified_by = data.get('id')
@@ -68,7 +87,11 @@ def delete(user_id, admin_id):
 
 def modify_admin_status(data, user_id):
     user = User.query.get(user_id)
-    if user:
+    modify_admin_schema = ModifyAdminStatusSchema()
+    errors = modify_admin_schema.validate(data)
+    if errors:
+        response = jsonify(errors), 400
+    elif user:
         privileges = data.get('admin')
         if privileges not in [0, 1]:
             return jsonify('Unprocessable Entity, wrong input'), 422
@@ -85,7 +108,11 @@ def modify_admin_status(data, user_id):
 
 def change_password(data, user_id):
     user = User.query.get(user_id)
-    if user:
+    change_password_schema = ChangePasswordSchema()
+    errors = change_password_schema.validate(data)
+    if errors:
+        response = jsonify(errors), 400
+    elif user:
         if not user.check_password(data.get('old_password')):
             return jsonify('Wrong password'), 401
         user.set_password(data.get('new_password'))

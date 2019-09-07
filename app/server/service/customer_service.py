@@ -2,19 +2,28 @@ from datetime import datetime
 from flask import jsonify
 
 from server import db
-from ..model.customer import Customer
+from ..model.customer import (
+    Customer,
+    CustomerSchema,
+    UpdateCustomerSchema,
+    CreateCustomerSchema
+)
 from ..util.image_upload import upload_image
 
 
 def all_customers():
-    return jsonify([customer.__str__() for customer in
-                    Customer.query.filter_by(is_deleted=False)]), 200
+    customer_schema = CustomerSchema(many=True)
+    customers = Customer.query.filter_by(is_deleted=False)
+    response = customer_schema.dump(customers)
+    return jsonify(response), 200
 
 
 def get_a_customer(id):
+
     customer = Customer.query.get(id)
-    if customer:
-        response = jsonify(customer.__str__()), 200
+    if customer and customer.is_deleted is False:
+        customer_schema = CustomerSchema()
+        response = customer_schema.dump(customer), 200
     else:
         response = jsonify('User not found'), 404
     return response
@@ -22,7 +31,11 @@ def get_a_customer(id):
 
 def create_customer(data):
     customer = Customer.query.filter_by(email=data['email']).first()
-    if not customer:
+    create_customer_schema = CreateCustomerSchema()
+    errors = create_customer_schema.validate(data)
+    if errors:
+        response = jsonify(errors), 400
+    elif not customer:
         photo_url = get_photo_url(data)
         customer = Customer(
             email=data.get('email'),
@@ -35,7 +48,8 @@ def create_customer(data):
             last_modified_at=datetime.now()
         )
         _save_customer(customer)
-        response = jsonify(customer.__str__()), 201
+        customer_schema = CustomerSchema()
+        response = customer_schema.dump(customer), 201
     else:
         response = jsonify('User already exists'), 409
     return response
@@ -43,7 +57,11 @@ def create_customer(data):
 
 def update_customer(data, customer_id):
     customer = Customer.query.get(customer_id)
-    if customer:
+    update_customer_schema = UpdateCustomerSchema()
+    errors = update_customer_schema.validate(data)
+    if errors:
+        response = jsonify(errors), 400
+    elif customer:
         photo_url = get_photo_url(data)
         if data.get('name'):
             customer.name = data['name']
