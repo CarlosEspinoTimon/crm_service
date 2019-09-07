@@ -13,9 +13,9 @@ from ..model.user import (
 
 
 def all_users():
-    schema = UserSchema(many=True)
+    user_schema = UserSchema(many=True)
     users = User.query.filter_by(is_deleted=False)
-    response = schema.dump(users)
+    response = user_schema.dump(users)
     return jsonify(response), 200
 
 
@@ -23,7 +23,7 @@ def get_a_user(user_id):
     user = User.query.get(user_id)
     if user and user.is_deleted is False:
         user_schema = UserSchema()
-        response = user_schema.jsonify(user), 200
+        response = user_schema.dump(user), 200
     else:
         response = jsonify('User not found'), 404
     return response
@@ -48,7 +48,7 @@ def create_user(data):
         user.set_password(data.get('password'))
         _save_user(user)
         user_schema = UserSchema()
-        response = user_schema.jsonify(user), 201
+        response = user_schema.dump(user), 201
     else:
         response = jsonify('User already exists'), 409
     return response
