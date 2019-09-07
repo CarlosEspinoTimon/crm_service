@@ -7,11 +7,13 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_marshmallow import Marshmallow
 
 
 sys.stdout.flush()
 db = SQLAlchemy()
 migrate = Migrate()
+ma = Marshmallow()
 
 
 def create_app(app_config='config.Dev'):
@@ -23,6 +25,7 @@ def create_app(app_config='config.Dev'):
 
     db.init_app(app)
     migrate.init_app(app, db)
+    ma.init_app(app)
 
     from .model.customer import Customer
     from .model.user import User

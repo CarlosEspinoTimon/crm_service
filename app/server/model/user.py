@@ -3,8 +3,10 @@ from time import time
 from flask import current_app as app
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
+from marshmallow import Schema, fields
+from marshmallow.validate import Range
 
-from server import db
+from server import db, ma
 
 
 class User(db.Model):
@@ -49,10 +51,43 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
     def generate_auth_token(self, expiration=300):
-        return jwt.encode({
-                        'id': self.id,
-                        'exp': time() + expiration,
-                        'admin': self.admin
-                        },
-                        app.config['SECRET_KEY'], algorithm='HS256'
-                        ).decode('utf-8')
+        return jwt.encode(
+            {
+                'id': self.id,
+                'exp': time() + expiration,
+                'admin': self.admin
+            },
+            app.config['SECRET_KEY'], algorithm='HS256'
+            ).decode('utf-8')
+
+
+class UserSchema(ma.ModelSchema):
+    class Meta:
+        model = User
+        include_fk = True
+        exclude = ['password_hash']
+
+
+class CreateUserSchema(Schema):
+    email = fields.Str(required=True)
+    name = fields.Str(required=True)
+    surname = fields.Str(required=True)
+    password = fields.Str(required=True)
+    id = fields.Int(required=True, validate=Range(min=1))
+
+
+class UpdateUserSchema(Schema):
+    name = fields.Str(required=True)
+    surname = fields.Str(required=True)
+    id = fields.Int(required=True, validate=Range(min=1))
+
+
+class ModifyAdminStatusSchema(Schema):
+    admin = fields.Boolean(required=True)
+    id = fields.Int(required=True, validate=Range(min=1))
+
+
+class ChangePasswordSchema(Schema):
+    old_password = fields.Str(required=True)
+    new_password = fields.Str(required=True)
+    id = fields.Int(required=True, validate=Range(min=1))

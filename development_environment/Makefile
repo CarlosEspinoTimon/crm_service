@@ -25,6 +25,11 @@ backend-install-module:
 backend-tests:
 	sudo docker exec -t $(backend) pipenv run python tests/tests.py
 
+# Run only one test
+# usage --> make backend-one-test test="TEST NAME"
+backend-one-test:
+	sudo docker exec -t $(backend) pipenv run python tests/tests.py '$(test)'
+
 # Code style
 code-style-verbose:
 	sudo docker exec $(backend) /bin/bash -c 'find ./ -not -path "./docs*" -not -path "./migrations*" -iname "*.py" | xargs pipenv run pycodestyle --verbose'

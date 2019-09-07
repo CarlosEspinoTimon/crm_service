@@ -6,7 +6,9 @@ if [ $? -lt 1 ]
     then
         echo "Tests passed. Keek going with the checks...\n"
     else
+        echo "\n##############################################################\n"
         echo "Tests not passed. Fix the errors before commiting the changes.\n"
+        echo "##############################################################\n"
         exit 1
 fi
 
@@ -14,7 +16,9 @@ if [ `((cd development_environment && make code-style) |  wc -l)` -eq 1 ];
 then
     echo "\nThere are no code-style errors, the commit can proceed.\n"
 else
-    echo "\nThere are code-style errors, run make code-style-verbose to see the errors.\n"
+    echo "\n###########################################################################\n"
+    echo "There are code-style errors, run make code-style-verbose to see the errors.\n"
+    echo "###########################################################################\n"
     exit 1
 fi
 
@@ -25,7 +29,9 @@ if [ $? -lt 1 ]
     then
         echo "Documentation generated.\n"
     else
+        echo "\n#####################\n"
         echo "Something went wrong.\n"
+        echo "#####################\n"
         exit 1
 fi
 

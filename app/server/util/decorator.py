@@ -53,6 +53,10 @@ def process_token(token, **kwargs):
     except jwt.InvalidSignatureError:
         return jsonify('''Signature verification failed'''), 401, None
     except Exception as _:
+        try:
+            request.get_json()
+        except Exception:
+            return jsonify('''The request must have a body'''), 400, None
         return jsonify('''Signature verification failed'''), 401, None
     return payload, False, kwargs
 

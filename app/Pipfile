@@ -20,6 +20,9 @@ mysqlclient = "*"
 sphinxcontrib-httpdomain = "*"
 google-api-python-client = "*"
 google-cloud-storage = "*"
+google = "*"
+flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
 
 [requires]
 python_version = "3.7"
