@@ -41,6 +41,13 @@ To start it, you have to run (from the `development_environmet` directory):
 
 `make init`
 
+### __Upgrade database__
+This project uses [Flask SQL Alchemy](https://flask-sqlalchemy.palletsprojects.com/en/2.x/) as ORM and [flask-Migrate](https://flask-migrate.readthedocs.io/en/latest/) to control the migrations in the database. The first time you run the server you have to upgrade your database. 
+
+To do so, you can just execute (from the `development_environmet` directory):
+
+`make db_upgrade`
+
 ### __Running the tests__
 The test are run in a test database, to run them you can just execute (from the `development_environmet` directory):
 
