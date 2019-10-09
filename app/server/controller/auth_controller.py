@@ -4,7 +4,7 @@ from flask_cors import CORS
 from ..model.user import User
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
-CORS(auth, max_age=30*86400)
+CORS(auth, max_age=30 * 86400)
 
 
 @auth.route('/login', methods=['POST'])

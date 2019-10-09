@@ -17,6 +17,7 @@ class Prod(Config):
 
 class Dev(Config):
     DEBUG = True
+    HOST = "0.0.0.0"
 
 
 class Test(Config):

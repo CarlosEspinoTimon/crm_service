@@ -3,7 +3,8 @@ from marshmallow import Schema, fields
 from marshmallow.validate import Range
 from marshmallow_sqlalchemy import ModelSchema
 
-from server import db, ma
+from server import db
+from server import ma
 
 
 class Customer(db.Model):
@@ -40,6 +41,7 @@ class Customer(db.Model):
 
 
 class CustomerSchema(ModelSchema):
+
     class Meta:
         model = Customer
         include_fk = True

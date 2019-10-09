@@ -14,7 +14,7 @@ build:
 
 # Access backend
 access-backend:
-	sudo docker exec -it $(backend) bash
+	sudo docker exec -it $(backend) sh
 
 # Install a module
 # usage --> make backend-install-module module="MODULE NAME"
@@ -32,16 +32,16 @@ backend-one-test:
 
 # Code style
 code-style-verbose:
-	sudo docker exec $(backend) /bin/bash -c 'find ./ -not -path "./docs*" -not -path "./migrations*" -iname "*.py" | xargs pipenv run pycodestyle --verbose'
+	sudo docker exec $(backend) /bin/sh -c 'find ./ -not -path "./docs*" -not -path "./migrations*" -iname "*.py" | xargs pipenv run pycodestyle --verbose'
 
 # Code style
 code-style:
-	sudo docker exec $(backend) /bin/bash -c 'find ./ -not -path "./docs*" -not -path "./migrations*" -iname "*.py" | xargs pipenv run pycodestyle --quiet'
+	sudo docker exec $(backend) /bin/sh -c 'find ./ -not -path "./docs*" -not -path "./migrations*" -iname "*.py" | xargs pipenv run pycodestyle --quiet'
 
 # Generate documentation
 documentation:
-	# sudo docker exec $(backend) /bin/bash -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ -M --ext-autodoc -f && pipenv run make clean && pipenv run make html'
-	sudo docker exec $(backend) /bin/bash -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ --ext-autodoc && pipenv run make clean && pipenv run make html'
+	# sudo docker exec $(backend) /bin/sh -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ -M --ext-autodoc -f && pipenv run make clean && pipenv run make html'
+	sudo docker exec $(backend) /bin/sh -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ --ext-autodoc && pipenv run make clean && pipenv run make html'
 
 # Init database
 db_init:
