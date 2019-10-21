@@ -1,5 +1,6 @@
 from datetime import datetime
-from flask import jsonify, abort
+from flask import abort
+from flask import jsonify
 
 from server import db
 from ..model.user import (

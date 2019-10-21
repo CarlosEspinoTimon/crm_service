@@ -1,7 +1,8 @@
+import os
 from server import create_app
-import sys
 
-app = create_app('config.Prod')
+
+app = create_app(os.environ.get('CONFIG_MODE'))
 
 if __name__ == "__main__":
     app.run()

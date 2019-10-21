@@ -52,7 +52,7 @@ def process_token(token, **kwargs):
         return jsonify('''Token expired'''), 401, None
     except jwt.InvalidSignatureError:
         return jsonify('''Signature verification failed'''), 401, None
-    except Exception as _:
+    except Exception:
         try:
             request.get_json()
         except Exception:

@@ -1,4 +1,6 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint
+from flask import jsonify
+from flask import request
 from flask_cors import CORS
 
 from ..util.decorator import check_user_token

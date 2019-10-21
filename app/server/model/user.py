@@ -43,10 +43,11 @@ class User(db.Model):
                 'admin': self.admin
             },
             app.config['SECRET_KEY'], algorithm='HS256'
-            ).decode('utf-8')
+        ).decode('utf-8')
 
 
 class UserSchema(ma.ModelSchema):
+
     class Meta:
         model = User
         include_fk = True

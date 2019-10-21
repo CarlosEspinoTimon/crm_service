@@ -16,8 +16,7 @@ migrate = Migrate()
 ma = Marshmallow()
 
 
-def create_app(app_config='config.Dev'):
-    # create and configure the app
+def create_app(app_config):
     app = Flask(__name__)
     app.config.from_object(app_config)
 
@@ -41,6 +40,7 @@ def create_app(app_config='config.Dev'):
     # A simple page that says server status
     @app.route('/')
     def home():
+        a = "a"
         return jsonify('The server is running!!')
 
     return app

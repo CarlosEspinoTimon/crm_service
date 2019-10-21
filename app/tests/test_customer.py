@@ -84,8 +84,8 @@ class TestCustomer(BaseTestClass):
         self.create_customer(customer)
         res = self.tester_app.get('/customers/',
                                   headers={
-                                    'Content-Type': 'application/json',
-                                    'Authorization': self.user_token
+                                      'Content-Type': 'application/json',
+                                      'Authorization': self.user_token
                                   })
         data = json.loads(res.get_data(as_text=True))
         self.assertEqual(res.status_code, 200)
@@ -103,7 +103,7 @@ class TestCustomer(BaseTestClass):
                                   headers={
                                       'Content-Type': 'application/json',
                                       'Authorization': self.user_token
-                                   })
+                                  })
         data = json.loads(res.get_data(as_text=True))
         self.assertEqual(res.status_code, 200)
         customer = Customer.query.get(1)
@@ -117,7 +117,7 @@ class TestCustomer(BaseTestClass):
                                      headers={
                                          'Content-Type': 'application/json',
                                          'Authorization': self.user_token
-                                            })
+                                     })
         self.assertEqual(res.status_code, 200)
         customer = Customer.query.get(1)
         self.assertEqual(customer.is_deleted, True)
