@@ -23,6 +23,8 @@ google = "*"
 flask-marshmallow = "*"
 marshmallow-sqlalchemy = "*"
 codestyle = "*"
+ptvsd="*"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"

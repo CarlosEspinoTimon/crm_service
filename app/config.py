@@ -6,7 +6,7 @@ class Config(object):
     SECRET_KEY = 'supersecretkey'
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = 'mysql://user:password@10.5.0.102/app_db'
+    SQLALCHEMY_DATABASE_URI = 'mysql://user:password@db/app_db'
     SQLALCHEMY_TRACK_MODIFICATIONS = 'False'
     GOOGLE_PROJECT = os.environ.get('GOOGLE_PROJECT')
 
@@ -22,4 +22,4 @@ class Dev(Config):
 
 class Test(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'mysql://user:password@10.5.0.103/test_db'
+    SQLALCHEMY_DATABASE_URI = 'mysql://user:password@db_test/test_db'
