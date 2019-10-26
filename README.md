@@ -11,8 +11,9 @@ You need to have installed:
 
 You need to create a .env file in the `app` directory with some variables:
 ```
-FLASK_APP=server:create_app('config.Dev')
+FLASK_APP=main
 FLASK_ENV=development
+CONFIG_MODE='config.Dev'
 DATABASE_URI=YOUR_PRODUCTION_DATABASE 
 PYTHONUNBUFFERED=1
 GOOGLE_LOGIN_CLIENT_ID=YOUR_CLIENT_ID
@@ -46,7 +47,7 @@ This project uses [Flask SQL Alchemy](https://flask-sqlalchemy.palletsprojects.c
 
 To do so, you can just execute (from the `development_environmet` directory):
 
-`make db_upgrade`
+`make db-upgrade`
 
 ### __Running the tests__
 The test are run in a test database, to run them you can just execute (from the `development_environmet` directory):
@@ -70,6 +71,41 @@ The modules have to be installed in the server that is inside the container, so 
 `make backend-install-module module='Name of the module'`
 
 This will install the module in the container and it will be added to the Pipfile which is shared with the host and tracked in the repository.
+
+### __Debug the code__
+There is a docker-compose file that inits the server in a debug mode with the ptvsd module. Then you have to configure your environment to be able to connect with the server. Here I show an example of the `launch.json` for Visual Studio Code:
+
+```
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        
+       {
+        "name": "Remote App",
+        "type": "python",
+        "request": "attach",
+        "pathMappings": [
+            {
+                "localRoot": "${workspaceFolder}/app/server/",
+                "remoteRoot": "/app/server/"
+            }
+        ],
+        "port": 5678,
+        "host": "localhost"
+    }
+    ]
+}
+```
+To debug you must first init the debug server:
+
+`make debug-backend`
+
+Then you have to start the Visual Studio Code Debugger. Once started you can interact with the server through the 5001 port and set some breakpoints in your code.
+
+Beware that you `must have` the same version of the ptvsd module installed in your host.
 
 ## __Documentation__
 As you can see in the GitHooks section, this proyect is configured to automatically generate the documentation for the API with Sphinx before each commit. The generated html code is in `app/docs/_build/html/` you can open the `index.html` and navigate through the documentation.
