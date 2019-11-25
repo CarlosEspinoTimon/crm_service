@@ -18,9 +18,8 @@ def all_customers():
     return jsonify(response), 200
 
 
-def get_a_customer(id):
-
-    customer = Customer.query.get(id)
+def get_a_customer(customer_id):
+    customer = Customer.query.get(customer_id)
     if customer and customer.is_deleted is False:
         customer_schema = CustomerSchema()
         response = customer_schema.dump(customer), 200
@@ -30,12 +29,12 @@ def get_a_customer(id):
 
 
 def create_customer(data):
-    customer = Customer.query.filter_by(email=data['email']).first()
     create_customer_schema = CreateCustomerSchema()
     errors = create_customer_schema.validate(data)
     if errors:
         response = jsonify(errors), 400
-    elif not customer:
+    customer = Customer.query.filter_by(email=data['email']).first()
+    if not customer:
         photo_url = get_photo_url(data)
         customer = Customer(
             email=data.get('email'),
@@ -56,12 +55,12 @@ def create_customer(data):
 
 
 def update_customer(data, customer_id):
-    customer = Customer.query.get(customer_id)
     update_customer_schema = UpdateCustomerSchema()
     errors = update_customer_schema.validate(data)
     if errors:
         response = jsonify(errors), 400
-    elif customer:
+    customer = Customer.query.get(customer_id)
+    if customer:
         photo_url = get_photo_url(data)
         if data.get('name'):
             customer.name = data['name']

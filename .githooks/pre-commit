@@ -8,6 +8,7 @@ if [ $? -lt 1 ]
     else
         echo "\n##############################################################\n"
         echo "Tests not passed. Fix the errors before commiting the changes.\n"
+        echo "Ensure that you have the environment running to pass the tests.\n"
         echo "##############################################################\n"
         exit 1
 fi
