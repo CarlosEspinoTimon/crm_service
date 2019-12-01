@@ -25,6 +25,8 @@ marshmallow-sqlalchemy = "*"
 codestyle = "*"
 ptvsd="*"
 python-dotenv = "*"
+oauthlib = "*"
+pyopenssl = "*"
 
 [requires]
 python_version = "3.7"
