@@ -42,6 +42,10 @@ code-style-verbose:
 code-style:
 	docker exec $(backend) /bin/sh -c 'find ./ -not -path "./docs*" -not -path "./migrations*" -iname "*.py" | xargs pipenv run pycodestyle --quiet'
 
+# Code style
+code-style-fix:
+	docker run -v $(pwd)/../app/:/tmp/code webpp/codestyle -i /tmp/code -x '/tmp/code/docs' '/tmp/code/migrations'
+
 # Generate documentation
 documentation:
 	# docker exec $(backend) /bin/sh -c 'cd docs && pipenv run sphinx-apidoc -o . ../server/ -M --ext-autodoc -f && pipenv run make clean && pipenv run make html'
