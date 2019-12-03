@@ -44,7 +44,7 @@ code-style:
 
 # Code style
 code-style-fix:
-	docker run -v $(pwd)/../app/:/tmp/code webpp/codestyle -i /tmp/code -x '/tmp/code/docs' '/tmp/code/migrations'
+	docker run -v $(shell pwd)/../app/:/tmp/code webpp/codestyle -i /tmp/code -x '/tmp/code/docs' '/tmp/code/migrations'
 
 # Generate documentation
 documentation:
