@@ -3,7 +3,6 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-
 class Config():
     SECRET_KEY = 'supersecretkey'
     DEBUG = False
@@ -17,9 +16,13 @@ class Config():
     Credentials = namedtuple('Credentials', 'id secret')
     OAUTH_CREDENTIALS = {
         'google': Credentials(
-            os.environ.get("GOOGLE_CLIENT_ID", None), 
+            os.environ.get("GOOGLE_CLIENT_ID", None),
             os.environ.get("GOOGLE_CLIENT_SECRET", None)
-            )
+            ),
+        'facebook': Credentials(
+            os.environ.get("FACEBOOK_CLIENT_ID", None),
+            os.environ.get("FACEBOOK_CLIENT_SECRET", None)
+        )
     }
 
 

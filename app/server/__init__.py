@@ -30,7 +30,6 @@ def create_app(app_config):
     migrate.init_app(app, db)
     ma.init_app(app)
 
- 
     from .model.customer import Customer
     from .model.user import User
 
@@ -47,7 +46,4 @@ def create_app(app_config):
     def home():
         return jsonify('The server is running!!')
 
-
     return app
-
-

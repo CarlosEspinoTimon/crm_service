@@ -9,7 +9,6 @@ from ..model.user import User
 
 class OAuthSignIn():
     providers = None
-    client = None
 
     def __init__(self, provider_name):
         self.provider_name = provider_name
@@ -29,8 +28,6 @@ class OAuthSignIn():
 
     @classmethod
     def get_provider(cls, provider_name):
-        if cls.client is None:
-            cls.client = WebApplicationClient(app.config["GOOGLE_CLIENT_ID"])
         if cls.providers is None:
             cls.providers = {}
             for provider_class in cls.__subclasses__():
@@ -42,18 +39,16 @@ class OAuthSignIn():
 class GoogleSignIn(OAuthSignIn):
     def __init__(self):
         super(GoogleSignIn, self).__init__('google')
+        self.client = WebApplicationClient(self.consumer_id)
 
     @classmethod
     def get_google_provider_cfg(cls):
         return requests.get(app.config["GOOGLE_DISCOVERY_URL"]).json()
 
     def authorize(self):
-        # Find out what URL to hit for Google login
         google_provider_cfg = self.get_google_provider_cfg()
         authorization_endpoint = google_provider_cfg["authorization_endpoint"]
 
-        # Use library to construct the request for Google login and provide
-        # scopes that let you retrieve user's profile from Google
         request_uri = self.client.prepare_request_uri(
             authorization_endpoint,
             redirect_uri=request.base_url + "/callback",
@@ -63,15 +58,11 @@ class GoogleSignIn(OAuthSignIn):
         return jsonify({'uri': request_uri})
 
     def callback(self):
-        # Get authorization code Google sent back to you
         code = request.args.get("code")
 
-        # Find out what URL to hit to get tokens that allow you to ask for
-        # things on behalf of a user
         google_provider_cfg = self.get_google_provider_cfg()
         token_endpoint = google_provider_cfg["token_endpoint"]
 
-        # Prepare and send a request to get tokens! Yay tokens!
         token_url, headers, body = self.client.prepare_token_request(
             token_endpoint,
             authorization_response=request.url,
@@ -83,25 +74,19 @@ class GoogleSignIn(OAuthSignIn):
             headers=headers,
             data=body,
             auth=(
-                app.config["GOOGLE_CLIENT_ID"],
-                app.config["GOOGLE_CLIENT_SECRET"]
+                self.consumer_id,
+                self.consumer_secret
             ),
         )
 
-        # Parse the tokens!
-        self.client.parse_request_body_response(json.dumps(token_response.json()))
+        self.client.parse_request_body_response(
+            json.dumps(token_response.json())
+            )
 
-
-        # Now that you have tokens (yay) let's find and hit the URL
-        # from Google that gives you the user's profile information,
-        # including their Google profile image and email
         userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
         uri, headers, body = self.client.add_token(userinfo_endpoint)
         userinfo_response = requests.get(uri, headers=headers, data=body)
 
-        # You want to make sure their email is verified.
-        # The user authenticated with Google, authorized your
-        # app, and now you've verified their email through Google!
         if userinfo_response.json().get("email_verified"):
             user_email = userinfo_response.json()["email"]
         else:
@@ -112,3 +97,62 @@ class GoogleSignIn(OAuthSignIn):
             return jsonify("User not stored")
         else:
             return user.generate_auth_token()
+
+class FacebookSignIn(OAuthSignIn):
+    def __init__(self):
+        super(FacebookSignIn, self).__init__('facebook')
+        self.client = WebApplicationClient(self.consumer_id)
+        self.authorize_url = 'https://graph.facebook.com/oauth/authorize'
+        self.access_token_url = 'https://graph.facebook.com/oauth/access_token'
+        self.user_info_url = 'https://graph.facebook.com/me?fields=email'
+        
+
+    def authorize(self):
+        request_uri = self.client.prepare_request_uri(
+            self.authorize_url,
+            redirect_uri=request.base_url + "/callback",
+            scope=["email"],
+        )
+
+        return jsonify({'uri': request_uri})
+      
+
+    def callback(self):
+        code = request.args.get("code")
+
+
+        token_url, headers, body = self.client.prepare_token_request(
+            self.access_token_url,
+            authorization_response=request.url,
+            redirect_url=request.base_url,
+            code=code
+        )
+        token_response = requests.post(
+            token_url,
+            headers=headers,
+            data=body,
+            auth=(
+                self.consumer_id,
+                self.consumer_secret
+            ),
+        )
+
+        self.client.parse_request_body_response(
+            json.dumps(token_response.json())
+            )
+
+        uri, headers, body = self.client.add_token(self.user_info_url)
+        userinfo_response = requests.get(uri, headers=headers, data=body)
+
+        user_email = userinfo_response.json()["email"]
+
+        user = User.query.filter_by(email=user_email).first()
+        if not user:
+            return jsonify("User not stored")
+        else:
+            return user.generate_auth_token()
+
+        
+
+        return jsonify("aaaa")
+

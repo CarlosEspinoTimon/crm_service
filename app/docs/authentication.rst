@@ -1,7 +1,7 @@
 Authentication
 ==============
 
-.. automodule:: server.controller.auth_controller
+.. automodule:: server.controller.authentication_controller
    :members:
    :undoc-members:
    :show-inheritance:

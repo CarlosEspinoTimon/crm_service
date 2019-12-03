@@ -66,4 +66,3 @@ def oauth_callback(provider):
     """
     oauth = OAuthSignIn.get_provider(provider)
     return oauth.callback()
-    
