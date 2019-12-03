@@ -18,7 +18,7 @@ class Config():
         'google': Credentials(
             os.environ.get("GOOGLE_CLIENT_ID", None),
             os.environ.get("GOOGLE_CLIENT_SECRET", None)
-            ),
+        ),
         'facebook': Credentials(
             os.environ.get("FACEBOOK_CLIENT_ID", None),
             os.environ.get("FACEBOOK_CLIENT_SECRET", None)

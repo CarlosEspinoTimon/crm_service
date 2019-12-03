@@ -37,6 +37,7 @@ class OAuthSignIn():
 
 
 class GoogleSignIn(OAuthSignIn):
+
     def __init__(self):
         super(GoogleSignIn, self).__init__('google')
         self.client = WebApplicationClient(self.consumer_id)
@@ -81,7 +82,7 @@ class GoogleSignIn(OAuthSignIn):
 
         self.client.parse_request_body_response(
             json.dumps(token_response.json())
-            )
+        )
 
         userinfo_endpoint = google_provider_cfg["userinfo_endpoint"]
         uri, headers, body = self.client.add_token(userinfo_endpoint)
@@ -98,14 +99,15 @@ class GoogleSignIn(OAuthSignIn):
         else:
             return user.generate_auth_token()
 
+
 class FacebookSignIn(OAuthSignIn):
+
     def __init__(self):
         super(FacebookSignIn, self).__init__('facebook')
         self.client = WebApplicationClient(self.consumer_id)
         self.authorize_url = 'https://graph.facebook.com/oauth/authorize'
         self.access_token_url = 'https://graph.facebook.com/oauth/access_token'
         self.user_info_url = 'https://graph.facebook.com/me?fields=email'
-        
 
     def authorize(self):
         request_uri = self.client.prepare_request_uri(
@@ -115,11 +117,9 @@ class FacebookSignIn(OAuthSignIn):
         )
 
         return jsonify({'uri': request_uri})
-      
 
     def callback(self):
         code = request.args.get("code")
-
 
         token_url, headers, body = self.client.prepare_token_request(
             self.access_token_url,
@@ -139,7 +139,7 @@ class FacebookSignIn(OAuthSignIn):
 
         self.client.parse_request_body_response(
             json.dumps(token_response.json())
-            )
+        )
 
         uri, headers, body = self.client.add_token(self.user_info_url)
         userinfo_response = requests.get(uri, headers=headers, data=body)
@@ -152,7 +152,4 @@ class FacebookSignIn(OAuthSignIn):
         else:
             return user.generate_auth_token()
 
-        
-
         return jsonify("aaaa")
-

@@ -170,7 +170,7 @@ def change_user_password(user_id):
     :type body: dict
     :reqheader Authorization: Bearer token
     """
-    data = request.get_json()  
+    data = request.get_json() 
     return change_password(data, user_id)
 
 
