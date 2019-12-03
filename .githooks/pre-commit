@@ -19,7 +19,7 @@ then
 else
     echo "\n###########################################################################\n"
     echo "\n There are code-style errors, trying to fix them.\n"
-    docker run -v $PWD/../app/:/tmp/code webpp/codestyle -i /tmp/code -x '/tmp/code/docs' '/tmp/code/migrations'
+    docker run -v $(pwd)/../app/:/tmp/code webpp/codestyle -i /tmp/code -x '/tmp/code/docs' '/tmp/code/migrations'
     echo $?
     if [ $? -lt 1 ]
         then
