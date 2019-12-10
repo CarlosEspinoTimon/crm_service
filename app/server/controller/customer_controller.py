@@ -16,7 +16,7 @@ customers = Blueprint('customers', __name__, url_prefix='/customers')
 CORS(customers, max_age=30 * 86400)
 
 
-@customers.route('/', methods=['GET'])
+@customers.route('/')
 @check_user_token
 def get_all_customers():
     """
@@ -34,7 +34,7 @@ def get_all_customers():
     return all_customers()
 
 
-@customers.route('/<int:customer_id>', methods=['GET'])
+@customers.route('/<int:customer_id>')
 @check_user_token
 def get_customer(customer_id):
     """

@@ -3,7 +3,13 @@ Server Module
 """
 import sys
 
-from flask import Flask, jsonify
+import requests
+
+from flask import Flask
+from flask import jsonify
+from flask import redirect
+from flask import request
+from flask import url_for
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -34,13 +40,12 @@ def create_app(app_config):
     app.register_blueprint(customer_controller.customers)
     from .controller import user_controller
     app.register_blueprint(user_controller.users)
-    from .controller import auth_controller
-    app.register_blueprint(auth_controller.auth)
+    from .controller import authentication_controller
+    app.register_blueprint(authentication_controller.authentication)
 
     # A simple page that says server status
     @app.route('/')
     def home():
-        a = "a"
         return jsonify('The server is running!!')
 
     return app

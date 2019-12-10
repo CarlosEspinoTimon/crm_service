@@ -11,7 +11,7 @@ RUN adduser -D ${username}
 RUN chown -R ${username} /app
 
 RUN apk add --no-cache --virtual .build-deps gcc \
-  build-base mysql-client mariadb-dev freetds-dev \
+    build-base mysql-client mariadb-dev freetds-dev libffi-dev \
     && apk add --no-cache mariadb-client-libs make \
     && pip3 install pipenv \
     && su -l ${username} \

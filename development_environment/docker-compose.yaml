@@ -14,7 +14,7 @@ services:
       - ../app:/app
     networks:
       - crm
-    command: pipenv run flask run --host=0.0.0.0
+    command: pipenv run flask run --host=0.0.0.0 --cert=adhoc
   db:
     image: mysql:5.7
     environment:

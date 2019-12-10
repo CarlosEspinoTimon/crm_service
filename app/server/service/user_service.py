@@ -1,5 +1,4 @@
 from datetime import datetime
-from flask import abort
 from flask import jsonify
 
 from server import db
@@ -11,6 +10,7 @@ from ..model.user import (
     ModifyAdminStatusSchema,
     ChangePasswordSchema
 )
+from ..util.check_schema import check_schema
 
 
 def all_users():
@@ -31,12 +31,9 @@ def get_a_user(user_id):
 
 
 def create_user(data):
+    check_schema(data, CreateUserSchema())
     user = User.query.filter_by(email=data.get('email')).first()
-    create_user_schema = CreateUserSchema()
-    errors = create_user_schema.validate(data)
-    if errors:
-        response = jsonify(errors), 400
-    elif not user:
+    if not user:
         user = User(
             email=data.get('email'),
             name=data.get('name'),
@@ -56,14 +53,13 @@ def create_user(data):
 
 
 def update_user(data, user_id):
+    check_schema(data, UpdateUserSchema())
     user = User.query.get(user_id)
-    update_user_schema = UpdateUserSchema()
-    errors = update_user_schema.validate(data)
-    if errors:
-        response = jsonify(errors), 400
-    elif user:
-        user.name = data.get('name')
-        user.surname = data.get('surname')
+    if user:
+        fields_to_update = ['name', 'surname']
+        for field in fields_to_update:
+            if data.get(field):
+                setattr(user, field, data[field])
         user.modified_by = data.get('id')
         user.modified_at = datetime.now()
         _save_user(user)
@@ -87,12 +83,9 @@ def delete(user_id, admin_id):
 
 
 def modify_admin_status(data, user_id):
+    check_schema(data, ModifyAdminStatusSchema())
     user = User.query.get(user_id)
-    modify_admin_schema = ModifyAdminStatusSchema()
-    errors = modify_admin_schema.validate(data)
-    if errors:
-        response = jsonify(errors), 400
-    elif user:
+    if user:
         privileges = data.get('admin')
         if privileges not in [0, 1]:
             return jsonify('Unprocessable Entity, wrong input'), 422
@@ -108,12 +101,9 @@ def modify_admin_status(data, user_id):
 
 
 def change_password(data, user_id):
+    check_schema(data, ChangePasswordSchema())
     user = User.query.get(user_id)
-    change_password_schema = ChangePasswordSchema()
-    errors = change_password_schema.validate(data)
-    if errors:
-        response = jsonify(errors), 400
-    elif user:
+    if user:
         if not user.check_password(data.get('old_password')):
             return jsonify('Wrong password'), 401
         user.set_password(data.get('new_password'))

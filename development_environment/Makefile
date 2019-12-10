@@ -4,14 +4,6 @@ backend=$(shell docker-compose ps -q backend)
 setup-environment:
 	(./create_env.sh && git config core.hooksPath .githooks)
 
-# Init
-init:
-	docker-compose up
-
-# Build
-build:
-	docker-compose build
-
 # Init the debuger
 debug-backend:
 	export FLASK_DEBUG=1 && docker-compose -f docker-compose.debug.yaml up
@@ -41,6 +33,10 @@ code-style-verbose:
 # Code style
 code-style:
 	docker exec $(backend) /bin/sh -c 'find ./ -not -path "./docs*" -not -path "./migrations*" -iname "*.py" | xargs pipenv run pycodestyle --quiet'
+
+# Code style
+code-style-fix:
+	docker run -v $(shell pwd)/../app/:/tmp/code webpp/codestyle -i /tmp/code -x '/tmp/code/docs' '/tmp/code/migrations'
 
 # Generate documentation
 documentation:
