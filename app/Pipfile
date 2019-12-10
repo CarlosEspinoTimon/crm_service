@@ -1,0 +1,32 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+flask = "*"
+flask-sqlalchemy = "*"
+sqlalchemy = "*"
+requests = "*"
+flask-cors = "*"
+flask-migrate = "*"
+pymysql = "*"
+pyjwt = "*"
+pycodestyle = "*"
+sphinx = "*"
+sphinx-rtd-theme = "*"
+mysqlclient = "*"
+sphinxcontrib-httpdomain = "*"
+google-api-python-client = "*"
+google-cloud-storage = "*"
+google = "*"
+flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
+codestyle = "*"
+ptvsd="*"
+python-dotenv = "*"
+oauthlib = "*"
+pyopenssl = "*"
+
+[requires]
+python_version = "3.7"

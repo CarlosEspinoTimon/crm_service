@@ -1,0 +1,53 @@
+echo "Skip pre-commit hooks with --no-verify (not recommended).\n" 
+
+(cd development_environment && make backend-tests)
+
+if [ $? -lt 1 ]
+    then
+        echo "Tests passed. Keek going with the checks...\n"
+    else
+        echo "\n##############################################################\n"
+        echo "Tests not passed. Fix the errors before commiting the changes.\n"
+        echo "Ensure that you have the environment running to pass the tests.\n"
+        echo "##############################################################\n"
+        exit 1
+fi
+
+if [ `((cd development_environment && make code-style) |  wc -l)` -eq 1 ]; 
+then
+    echo "\nThere are no code-style errors, the commit can proceed.\n"
+else
+    echo "\n###########################################################################\n"
+    echo "\n There are code-style errors, trying to fix them.\n"
+    (cd development_environment && make code-style-fix)
+    echo $?
+    if [ $? -lt 1 ]
+        then
+            echo "\n##############################################################\n"
+            echo "Codestyle errors fixed.\n"
+            echo "##############################################################\n"
+        else
+            echo "\n###########################################################################\n"
+            echo "There are unfixables code-style errors, run make code-style-verbose to see the errors.\n"
+            echo "###########################################################################\n"
+            exit 1
+            
+    fi
+fi
+
+echo "Generating documentation before push.\n"
+(cd development_environment && make documentation)
+
+if [ $? -lt 1 ]
+    then
+        echo "Documentation generated.\n"
+    else
+        echo "\n#####################\n"
+        echo "Something went wrong.\n"
+        echo "#####################\n"
+        exit 1
+fi
+
+git add app/docs/
+
+exit 0
