@@ -1,9 +1,7 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint
 from flask_cors import CORS
 
-from ..model.user import User
-
-from ..service.authentication_service import OAuthSignIn
+from ..service.authentication_service import OAuthSignIn, basic_login
 
 
 authentication = Blueprint('authentication', __name__, url_prefix='/login')
@@ -18,15 +16,11 @@ def login():
     Function that given a email and a password as headers it checks if there
     is a user in the database and generates a token.
 
+    :returns: The token
+    :rtype: String
+    
     """
-    email = request.headers.get('email')
-    password = request.headers.get('password')
-    user = User.query.filter_by(email=email).first()
-
-    if user and user.check_password(password):
-        return jsonify('Token: {}'.format(user.generate_auth_token(1800)))
-    else:
-        return jsonify('Unauthorized'), 401
+    return basic_login()
 
 
 @authentication.route('/<provider>')
@@ -58,7 +52,7 @@ def oauth_callback(provider):
 
     Callback endpoint that will be called after the user logs in with the third
     party OAuth provider. It will get the user eamil and check if it is in the
-    system, generate a token and return it to the user.
+    system, generates a token and return it.
 
     :returns: The token
     :rtype: String

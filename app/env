@@ -1,0 +1,31 @@
+# DEFAULT VARIABLES
+# ---------------------------------------------------------------------
+# Server variables for development
+FLASK_APP=main
+FLASK_ENV=development
+CONFIG_MODE='config.Dev'
+PYTHONUNBUFFERED=1
+
+# Google credentials service key
+GOOGLE_APPLICATION_CREDENTIALS=.credentials/crm-service-storage-key.json
+
+# Default Oauth variables
+GOOGLE_DISCOVERY_URL=https://accounts.google.com/.well-known/openid-configuration
+FACEBOOK_AUTHORIZE_URL=https://graph.facebook.com/oauth/authorize
+FACEBOOK_ACCESS_TOKEN_URL=https://graph.facebook.com/oauth/access_token
+FACEBOOK_USER_INFO_URL=https://graph.facebook.com/me?fields=email
+
+# USER DEFINED VARIABLES
+# ---------------------------------------------------------------------
+# User defined Oauth variables
+GOOGLE_CLIENT_ID=YOUR_CLIENT_ID
+GOOGLE_CLIENT_SECRET=YOUR_GOOGLE_CLIENT_SECRET
+FACEBOOK_CLIENT_ID=YOUR_FACEBOOK_CLIENT_ID
+FACEBOOK_CLIENT_SECRET=YOUR_FACEBOOK_CLIENT_SECRET
+
+# Production database URI
+DATABASE_URI=YOUR_MYSQL_URI
+
+# Bucket variables
+GOOGLE_PROJECT=YOUR_GOOGLE_PROJECT
+GOOGLE_BUCKET=YOUR_GOOGLE_BUCKET

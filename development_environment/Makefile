@@ -4,14 +4,6 @@ backend=$(shell docker-compose ps -q backend)
 setup-environment:
 	(./create_env.sh && git config core.hooksPath .githooks)
 
-# Init
-init:
-	docker-compose up
-
-# Build
-build:
-	docker-compose build
-
 # Init the debuger
 debug-backend:
 	export FLASK_DEBUG=1 && docker-compose -f docker-compose.debug.yaml up

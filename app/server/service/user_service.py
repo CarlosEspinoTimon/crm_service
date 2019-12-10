@@ -10,6 +10,7 @@ from ..model.user import (
     ModifyAdminStatusSchema,
     ChangePasswordSchema
 )
+from ..util.check_schema import check_schema
 
 
 def all_users():
@@ -30,10 +31,7 @@ def get_a_user(user_id):
 
 
 def create_user(data):
-    create_user_schema = CreateUserSchema()
-    errors = create_user_schema.validate(data)
-    if errors:
-        return jsonify(errors), 400
+    check_schema(data, CreateUserSchema())
     user = User.query.filter_by(email=data.get('email')).first()
     if not user:
         user = User(
@@ -55,14 +53,13 @@ def create_user(data):
 
 
 def update_user(data, user_id):
-    update_user_schema = UpdateUserSchema()
-    errors = update_user_schema.validate(data)
-    if errors:
-        return jsonify(errors), 400
+    check_schema(data, UpdateUserSchema())
     user = User.query.get(user_id)
     if user:
-        user.name = data.get('name')
-        user.surname = data.get('surname')
+        fields_to_update = ['name', 'surname']
+        for field in fields_to_update:
+            if data.get(field):
+                setattr(user, field, data[field])
         user.modified_by = data.get('id')
         user.modified_at = datetime.now()
         _save_user(user)
@@ -86,10 +83,7 @@ def delete(user_id, admin_id):
 
 
 def modify_admin_status(data, user_id):
-    modify_admin_schema = ModifyAdminStatusSchema()
-    errors = modify_admin_schema.validate(data)
-    if errors:
-        return jsonify(errors), 400
+    check_schema(data, ModifyAdminStatusSchema())
     user = User.query.get(user_id)
     if user:
         privileges = data.get('admin')
@@ -107,10 +101,7 @@ def modify_admin_status(data, user_id):
 
 
 def change_password(data, user_id):
-    change_password_schema = ChangePasswordSchema()
-    errors = change_password_schema.validate(data)
-    if errors:
-        return jsonify(errors), 400
+    check_schema(data, ChangePasswordSchema())
     user = User.query.get(user_id)
     if user:
         if not user.check_password(data.get('old_password')):

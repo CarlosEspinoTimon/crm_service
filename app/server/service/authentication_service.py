@@ -1,10 +1,20 @@
 import json
 import requests
 
-from flask import url_for, current_app as app, request, jsonify
+from flask import current_app as app, request, jsonify
 from oauthlib.oauth2 import WebApplicationClient
 
 from ..model.user import User
+
+def basic_login():
+    email = request.headers.get('email')
+    password = request.headers.get('password')
+    user = User.query.filter_by(email=email).first()
+
+    if user and user.check_password(password):
+        return jsonify('Token: {}'.format(user.generate_auth_token(1800)))
+    else:
+        return jsonify('Unauthorized'), 401
 
 
 class OAuthSignIn():
@@ -22,9 +32,12 @@ class OAuthSignIn():
     def callback(self):
         pass
 
-    def get_callback_url(self):
-        return url_for('auth.oauth_callback', provider=self.provider_name,
-                       _external=True)
+    def check__for_user_in_database(self, email):
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            return jsonify('Forbidden'), 403
+        else:
+            return jsonify('Token: {}'.format(user.generate_auth_token(1800)))
 
     @classmethod
     def get_provider(cls, provider_name):
@@ -91,13 +104,9 @@ class GoogleSignIn(OAuthSignIn):
         if userinfo_response.json().get("email_verified"):
             user_email = userinfo_response.json()["email"]
         else:
-            return "User email not available or not verified by Google.", 400
+            return jsonify("User email not available or not verified by Google."), 400
 
-        user = User.query.filter_by(email=user_email).first()
-        if not user:
-            return jsonify("User not stored")
-        else:
-            return user.generate_auth_token()
+        return super().check__for_user_in_database(user_email)
 
 
 class FacebookSignIn(OAuthSignIn):
@@ -105,9 +114,9 @@ class FacebookSignIn(OAuthSignIn):
     def __init__(self):
         super(FacebookSignIn, self).__init__('facebook')
         self.client = WebApplicationClient(self.consumer_id)
-        self.authorize_url = 'https://graph.facebook.com/oauth/authorize'
-        self.access_token_url = 'https://graph.facebook.com/oauth/access_token'
-        self.user_info_url = 'https://graph.facebook.com/me?fields=email'
+        self.authorize_url = app.config["FACEBOOK_AUTHORIZE_URL"]
+        self.access_token_url = app.config["FACEBOOK_ACCESS_TOKEN_URL"]
+        self.user_info_url = app.config["FACEBOOK_USER_INFO_URL"]
 
     def authorize(self):
         request_uri = self.client.prepare_request_uri(
@@ -146,10 +155,4 @@ class FacebookSignIn(OAuthSignIn):
 
         user_email = userinfo_response.json()["email"]
 
-        user = User.query.filter_by(email=user_email).first()
-        if not user:
-            return jsonify("User not stored")
-        else:
-            return user.generate_auth_token()
-
-        return jsonify("aaaa")
+        return super().check__for_user_in_database(user_email)
