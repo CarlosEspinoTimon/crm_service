@@ -1,2 +1,4 @@
-echo "GROUP_ID=$(id -g)" > .env
-echo "USER_ID=$(id -u)" >> .env
+#!/bin/bash
+cd ../app
+cp env .env
+

@@ -8,6 +8,7 @@ if [ $? -lt 1 ]
     else
         echo "\n##############################################################\n"
         echo "Tests not passed. Fix the errors before commiting the changes.\n"
+        echo "Ensure that you have the environment running to pass the tests.\n"
         echo "##############################################################\n"
         exit 1
 fi
@@ -18,7 +19,8 @@ then
 else
     echo "\n###########################################################################\n"
     echo "\n There are code-style errors, trying to fix them.\n"
-    docker run -v $(pdw)/../app/:/tmp/code webpp/codestyle -i /tmp/code -x '/tmp/code/docs' '/tmp/code/migrations'
+    (cd development_environment && make code-style-fix)
+    echo $?
     if [ $? -lt 1 ]
         then
             echo "\n##############################################################\n"

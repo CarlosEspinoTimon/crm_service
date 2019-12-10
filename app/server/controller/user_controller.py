@@ -1,6 +1,4 @@
 from flask import Blueprint
-from flask import abort
-from flask import jsonify
 from flask import request
 from flask_cors import CORS
 
@@ -19,7 +17,7 @@ users = Blueprint('users', __name__, url_prefix='/users')
 CORS(users, max_age=30 * 86400)
 
 
-@users.route('/', methods=['GET'])
+@users.route('/')
 @check_admin_token
 def get_all_users():
     """
@@ -37,7 +35,7 @@ def get_all_users():
     return all_users()
 
 
-@users.route('/<int:user_id>', methods=['GET'])
+@users.route('/<int:user_id>')
 @check_admin_token
 def get_user(user_id):
     """

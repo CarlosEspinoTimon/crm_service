@@ -47,7 +47,7 @@ def process_token(token, **kwargs):
             app.config['SECRET_KEY'],
             algorithms=['HS256']
         )
-        kwargs = process_id_from_token(payload, **kwargs)
+        kwargs = get_id_from_token(payload, **kwargs)
     except jwt.ExpiredSignatureError:
         return jsonify('''Token expired'''), 401, None
     except jwt.InvalidSignatureError:
@@ -61,7 +61,7 @@ def process_token(token, **kwargs):
     return payload, False, kwargs
 
 
-def process_id_from_token(payload, **kwargs):
+def get_id_from_token(payload, **kwargs):
     if request.method == 'DELETE':
         kwargs['id_obtained_from_token'] = payload['id']
     elif request.method != 'GET':
